@@ -1,0 +1,14 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: politico
+      POSTGRES_PASSWORD: politico
+      POSTGRES_DB: politico
+    ports:
+      - "5432:5432"
+    volumes:
+      - politico_data:/var/lib/postgresql/data
+
+volumes:
+  politico_data:
