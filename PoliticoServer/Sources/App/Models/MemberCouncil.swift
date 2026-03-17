@@ -7,9 +7,6 @@ final class MemberCouncil: Model, Content, @unchecked Sendable {
     @ID(custom: "id", generatedBy: .user)
     var id: Int?
 
-    @Field(key: "person_number")
-    var personNumber: Int
-
     @Field(key: "first_name")
     var firstName: String
 
@@ -91,11 +88,32 @@ final class MemberCouncil: Model, Content, @unchecked Sendable {
     @OptionalParent(key: "canton_id")
     var canton: Canton?
 
+    // Political positioning scores (-1.0 to 1.0)
+    @Field(key: "score_left_right")
+    var scoreLeftRight: Double?
+
+    @Field(key: "score_conservative_liberal")
+    var scoreConservativeLiberal: Double?
+
+    @Field(key: "score_liberal_economy")
+    var scoreLiberalEconomy: Double?
+
+    @Field(key: "score_innovative_location")
+    var scoreInnovativeLocation: Double?
+
+    @Field(key: "score_independent_energy")
+    var scoreIndependentEnergy: Double?
+
+    @Field(key: "score_strength_resilience")
+    var scoreStrengthResilience: Double?
+
+    @Field(key: "score_lean_government")
+    var scoreLeanGovernment: Double?
+
     init() {}
 
-    init(id: Int, personNumber: Int, firstName: String, lastName: String, active: Bool) {
+    init(id: Int, firstName: String, lastName: String, active: Bool) {
         self.id = id
-        self.personNumber = personNumber
         self.firstName = firstName
         self.lastName = lastName
         self.active = active

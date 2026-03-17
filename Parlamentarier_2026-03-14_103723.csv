@@ -1,0 +1,270 @@
+PersonNumber;FirstName;LastName;FullName;PartyAbbreviation;PartyName;ParlGroupAbbreviation;ParlGroupName;CantonAbbreviation;CantonName;CouncilAbbreviation;CouncilName;Active;DetailLoaded;DateOfBirth;MaritalStatus;NumberOfChildren;BirthPlaceCity;BirthPlaceCanton;Citizenship;Nationality;DateJoining;DateLeaving;DateElection;MilitaryRank;LinksRechts;KonservativLiberal;LiberaleWirtschaft;InnovativerStandort;UnabhaengigeStromversorgung;StaerkeResilienz;SchlankerStaat;HasAnalysis
+4154;Jean-Luc;Addor;Jean-Luc Addor;SVP;Schweizerische Volkspartei;V;Fraktion der Schweizerischen Volkspartei;VS;Wallis;NR;Nationalrat;1;1;1964-04-22;verheiratet;2;Lausanne;VD;Sainte-Croix (VD),Savièse (VS);Schweiz,Italien;2023-12-04;;2023-10-22;Hauptmann;0.80;-0.80;0.60;0.30;0.60;0.90;0.70;1
+4049;Matthias;Aebischer;Matthias Aebischer;SP;Sozialdemokratische Partei der Schweiz;S;Sozialdemokratische Fraktion;BE;Bern;NR;Nationalrat;0;0;1972-03-17;;;Schwarzenburg;BE;Guggisberg (BE);Schweiz;2023-12-04;2025-03-03;2023-10-22;Soldat;-0.70;0.40;0.20;0.60;0.70;0.40;0.10;1
+10803;Cyril;Aellen;Cyril Aellen;FDP-Liberale;FDP.Die Liberalen;RL;FDP-Liberale Fraktion;GE;Genf;NR;Nationalrat;1;0;1972-02-29;;;Genf;GE;Genf (GE);Schweiz;2023-12-04;;2023-10-22;-;0.40;0.60;0.80;0.70;0.60;0.50;0.70;1
+4053;Thomas;Aeschi;Thomas Aeschi;SVP;Schweizerische Volkspartei;V;Fraktion der Schweizerischen Volkspartei;ZG;Zug;NR;Nationalrat;1;0;1979-01-13;;;Zug;ZG;Basel (BS),Baar (ZG),Himmelried (SO);Schweiz;2023-12-04;;2023-10-22;Oberleutnant;0.90;-0.70;0.80;0.60;0.70;0.80;0.90;1
+10812;Islam;Alijaj;Islam Alijaj;SP;Sozialdemokratische Partei der Schweiz;S;Sozialdemokratische Fraktion;ZH;Zürich;NR;Nationalrat;1;0;1986-06-18;;;Hereq;--;Zürich (ZH);;2023-12-04;;2023-10-22;-;-0.70;0.60;0.30;0.70;0.30;0.20;0.10;1
+4090;Céline;Amaudruz;Céline Amaudruz;SVP;Schweizerische Volkspartei;V;Fraktion der Schweizerischen Volkspartei;GE;Genf;NR;Nationalrat;1;0;1979-03-15;;;Genève;GE;Lutry (VD);Schweiz;2023-12-04;;2023-10-22;-;0.80;-0.70;0.70;0.40;0.60;0.90;0.80;1
+4320;Emmanuel;Amoos;Emmanuel Amoos;SP;Sozialdemokratische Partei der Schweiz;S;Sozialdemokratische Fraktion;VS;Wallis;NR;Nationalrat;1;0;1980-07-31;verheiratet;2;Sierre;VS;Venthône (VS);Schweiz;2023-12-04;;2023-10-22;Soldat;-0.80;0.60;0.20;0.50;0.70;0.30;0.10;1
+4245;Gerhard;Andrey;Gerhard Andrey;GRÜNE;GRÜNE Schweiz;G;Grüne Fraktion;FR;Freiburg;NR;Nationalrat;1;0;1976-01-21;verheiratet;2;Freiburg;--;Val-de-Charmey (Cerniat (FR)) (FR);Schweiz;2023-12-04;;2023-10-22;;-0.70;0.60;0.30;0.80;0.80;0.40;0.20;1
+4184;Sibel;Arslan;Sibel Arslan;GRÜNE;GRÜNE Schweiz;G;Grüne Fraktion;BS;Basel-Stadt;NR;Nationalrat;1;0;1980-06-23;;;Erzincan;;Basel (BS);Schweiz,Türkei;2023-12-04;;2023-10-22;;-0.80;0.80;0.20;0.40;0.60;0.10;0.10;1
+4246;Christine;Badertscher;Christine Badertscher;GRÜNE;GRÜNE Schweiz;G;Grüne Fraktion;BE;Bern;NR;Nationalrat;1;0;1982-01-11;;;Sumiswald;BE;Lauperswil (BE);Schweiz;2023-12-04;;2023-10-22;;-0.70;0.60;0.30;0.50;0.80;0.20;0.10;1
+4058;Jacqueline;Badran;Jacqueline Badran;SP;Sozialdemokratische Partei der Schweiz;S;Sozialdemokratische Fraktion;ZH;Zürich;NR;Nationalrat;1;1;1961-11-12;;;Sydney;;Auswil (BE),Zürich (ZH);Schweiz,Australien;2023-12-04;;2023-10-22;;-0.80;0.30;0.10;0.20;0.40;0.30;0.10;1
+11508;Maya;Bally;Maya Bally;M-E;Die Mitte;M-E;Die Mitte-Fraktion. Die Mitte. EVP.;AG;Aargau;NR;Nationalrat;1;0;1978-06-19;;;Zürich;ZH;Boussens (VD);Schweiz;2023-12-04;;2023-10-22;-;-0.20;0.30;0.40;0.50;0.60;0.40;0.30;1
+10804;Bettina;Balmer;Bettina Balmer;FDP-Liberale;FDP.Die Liberalen;RL;FDP-Liberale Fraktion;ZH;Zürich;NR;Nationalrat;1;1;1966-04-19;verheiratet;3;Basel;BS;;Schweiz;2023-12-04;;2023-10-22;-;0.40;0.60;0.70;0.60;0.50;0.50;0.60;1
+10818;Nicole;Barandun;Nicole Barandun;M-E;Die Mitte;M-E;Die Mitte-Fraktion. Die Mitte. EVP.;ZH;Zürich;NR;Nationalrat;1;0;1971-09-09;;;Zürich;ZH;Domleschg (Feldis/Veulden) (GR),Fribourg (FR);Schweiz;2023-12-04;;2023-10-22;-;0.30;0.20;0.70;0.60;0.50;0.60;0.40;1
+4187;Philippe;Bauer;Philippe Bauer;FDP-Liberale;;RL;;NE;;SR;Ständerat;0;0;;;;;;;;;;;;0.70;0.30;0.80;0.60;0.50;0.60;0.80;1
+4247;Kilian;Baumann;Kilian Baumann;GRÜNE;GRÜNE Schweiz;G;Grüne Fraktion;BE;Bern;NR;Nationalrat;1;1;1980-12-14;;3;Bern;--;Wileroltigen (BE);Schweiz;2023-12-04;;2023-10-22;;-0.80;0.70;0.20;0.40;0.80;0.20;0.10;1
+4238;Elisabeth;Baume-Schneider;Elisabeth Baume-Schneider;SP;Sozialdemokratische Partei der Schweiz;;;JU;Jura;BR;Bundesrat;1;0;1976-01-10;;;St. Imier;BE;Les Breuleux (JU);Schweiz;2024-01-01;;2022-12-07;-;-0.70;0.40;0.20;0.50;0.30;0.20;0.10;1
+1138;Martin;Bäumle;Martin Bäumle;glp;;GL;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.10;0.70;0.70;0.80;0.80;0.30;0.60;1
+4213;Samuel;Bendahan;Samuel Bendahan;SP;Sozialdemokratische Partei der Schweiz;S;Sozialdemokratische Fraktion;VD;Waadt;NR;Nationalrat;1;0;1980-06-11;;;Lausanne;VD;Seengen (AG);Schweiz;2023-12-04;;2023-10-22;;-0.80;0.60;0.10;0.40;0.30;0.20;0.10;1
+16109;Rudi;Berli;Rudi Berli;GRÜNE;GRÜNE Schweiz;G;Grüne Fraktion;GE;Genf;NR;Nationalrat;1;1;1963-01-26;verheiratet;3;Zug;ZG;Hausen am Albis (ZH);Schweiz;2025-12-01;;2023-10-22;-;-0.80;0.70;0.20;0.30;0.60;0.20;0.10;1
+4102;Kathrin;Bertschy;Kathrin Bertschy;glp;Grünliberale Partei;GL;Grünliberale Fraktion;BE;Bern;NR;Nationalrat;1;0;1979-07-02;;;Thun;BE;Bern (BE),Düdingen (FR);Schweiz;2023-12-04;;2023-10-22;;-0.30;0.80;0.70;0.80;0.90;0.60;0.40;1
+4249;Marianne;Binder-Keller;Marianne Binder-Keller;M-E;Die Mitte;M-E;Die Mitte-Fraktion. Die Mitte. EVP.;AG;Aargau;SR;Ständerat;1;0;1981-07-20;verheiratet;2;Zürich;ZH;Baden (AG),Zurzach (Bad Zurzach) (AG),Untersiggenthal (AG);Schweiz;2023-12-04;;2023-11-19;-;0.30;-0.20;0.60;0.70;0.80;0.80;0.40;1
+4250;Martina;Bircher;Martina Bircher;SVP;Schweizerische Volkspartei;V;Fraktion der Schweizerischen Volkspartei;AG;Aargau;NR;Nationalrat;0;0;1984-04-13;;;Zürich;ZH;Sins (AG);Schweiz;2023-12-04;2024-12-15;2023-10-22;;0.80;-0.40;0.60;0.30;0.50;0.70;0.90;1
+3871;Pirmin;Bischof;Pirmin Bischof;M-E;Die Mitte;M-E;Die Mitte-Fraktion. Die Mitte. EVP.;SO;Solothurn;SR;Ständerat;1;0;1980-11-08;;;Solothurn;SO;Eggersriet (SG),Grub (AR);Schweiz;2023-12-04;;2023-10-22;Soldat;0.10;-0.20;0.60;0.70;0.50;0.40;0.30;1
+4334;Thomas;Bläsi;Thomas Bläsi;SVP;Schweizerische Volkspartei;V;Fraktion der Schweizerischen Volkspartei;GE;Genf;NR;Nationalrat;1;0;1971-04-17;;;F-18000 Bourges;--;Genf (GE);Schweiz,Frankreich;2023-12-04;;2023-10-22;-;0.80;-0.70;0.70;0.50;0.60;0.80;0.80;1
+10816;Dominik;Blunschy;Dominik Blunschy;M-E;Die Mitte;M-E;Die Mitte-Fraktion. Die Mitte. EVP.;SZ;Schwyz;NR;Nationalrat;1;0;1987-10-27;;;Schwyz;SZ;Niederrohrdorf (AG);Schweiz;2023-12-04;;2023-10-22;-;0.10;0.30;0.70;0.80;0.60;0.50;0.60;1
+4230;Philipp Matthias;Bregy;Philipp Matthias Bregy;M-E;;M-E;;VS;;NR;Nationalrat;1;0;;;;;;;;;;;;0.35;-0.40;0.60;0.50;0.40;0.60;0.70;1
+4315;Florence;Brenzikofer;Florence Brenzikofer;GRÜNE;;G;;BL;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.20;0.60;0.90;0.10;0.20;1
+10813;Simona;Brizzi;Simona Brizzi;SP;;S;;AG;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.60;0.30;0.60;0.70;0.20;0.10;1
+10805;Pascal;Broulis;Pascal Broulis;FDP-Liberale;FDP.Die Liberalen;RL;FDP-Liberale Fraktion;VD;Waadt;SR;Ständerat;1;0;1974-10-01;;;Sainte-Croix;VD;Sainte-Croix (VD);Schweiz,Griechenland;2023-12-04;;2023-11-12;-;0.50;0.60;0.80;0.70;0.60;0.50;0.70;1
+15601;Severin;Brüngger;Severin Brüngger;FDP-Liberale;FDP.Die Liberalen;RL;FDP-Liberale Fraktion;SH;Schaffhausen;SR;Ständerat;1;0;1978-04-18;;;Winterthur;ZH;Volketswil (ZH);Schweiz;2025-09-08;;2025-06-29;Soldat;0.60;0.40;0.80;0.70;0.70;0.60;0.80;1
+4025;Roland Rino;Büchel;Roland Rino Büchel;SVP;;V;;SG;;NR;Nationalrat;1;0;;;;;;;;;;;;0.85;-0.70;0.70;0.60;0.80;0.80;0.80;1
+4156;Michaël;Buffat;Michaël Buffat;SVP;Schweizerische Volkspartei;V;Fraktion der Schweizerischen Volkspartei;VD;Waadt;NR;Nationalrat;1;0;1979-09-27;;;Yverdon-les-Bains;--;Vuarrens (VD);Schweiz;2023-12-04;;2023-10-22;Fourier;0.85;-0.75;0.70;0.40;0.80;0.90;0.80;1
+4157;Manfred;Bühler;Manfred Bühler;SVP;;V;;BE;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.80;0.60;0.70;0.80;0.90;1
+4101;Christine;Bulliard-Marbach;Christine Bulliard-Marbach;M-E;Die Mitte;M-E;Die Mitte-Fraktion. Die Mitte. EVP.;FR;Freiburg;NR;Nationalrat;1;0;1980-03-22;verheiratet;3;Bern;--;Gibloux (FR);Schweiz;2023-12-04;;2023-10-22;-;-0.10;-0.20;0.40;0.60;0.70;0.40;0.30;1
+4158;Thomas;Burgherr;Thomas Burgherr;SVP;Schweizerische Volkspartei;V;Fraktion der Schweizerischen Volkspartei;AG;Aargau;NR;Nationalrat;1;0;1977-06-03;;;Zofingen;--;Schmiedrued (AG);Schweiz;2023-12-04;;2023-10-22;Soldat;0.80;-0.70;0.95;0.60;0.70;0.85;0.90;1
+10845;Roman;Bürgi;Roman Bürgi;SVP;;V;;SZ;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.60;0.90;0.60;0.70;0.90;0.90;1
+10819;Yvonne;Bürgin;Yvonne Bürgin;M-E;;M-E;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;0.30;-0.20;0.70;0.50;0.40;0.80;0.70;1
+4189;Thierry;Burkart;Thierry Burkart;FDP-Liberale;FDP.Die Liberalen;RL;FDP-Liberale Fraktion;AG;Aargau;SR;Ständerat;1;1;1975-08-21;;;Baden;AG;Baden (AG),Mühlau (AG);Schweiz;2023-12-04;;2023-10-22;Major;0.60;0.40;0.90;0.80;0.90;0.90;0.80;1
+10850;Didier;Calame;Didier Calame;SVP;;V;;NE;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;0.30;0.70;0.50;0.70;0.60;0.80;1
+10828;Hasan;Candan;Hasan Candan;SP;Sozialdemokratische Partei der Schweiz;S;Sozialdemokratische Fraktion;LU;Luzern;NR;Nationalrat;1;0;1985-02-24;;;Luzern;LU;Gersau (SZ);Schweiz,Türkei;2023-12-04;;2023-10-22;-;-0.80;0.70;0.20;0.30;0.60;0.20;0.10;1
+4070;Martin;Candinas;Martin Candinas;M-E;Die Mitte;M-E;Die Mitte-Fraktion. Die Mitte. EVP.;GR;Graubünden;NR;Nationalrat;1;0;1980-08-20;;3;Ilanz;GR;Sumvitg (GR);Schweiz;2023-12-04;;2023-10-22;-;0.10;-0.30;0.40;0.60;0.70;0.80;0.40;1
+4075;Andrea;Caroni;Andrea Caroni;FDP-Liberale;FDP.Die Liberalen;RL;FDP-Liberale Fraktion;AR;Appenzell A.-Rh.;SR;Ständerat;1;0;1980-04-19;;2;St. Gallen;SG;Mendrisio (TI),Grub (AR);Schweiz;2023-12-04;;2023-10-22;Oberst;0.60;0.80;0.90;0.80;0.70;0.60;0.80;1
+3828;Ignazio;Cassis;Ignazio Cassis;FDP-Liberale;;;;TI;;BR;Bundesrat;1;0;;;;;;;;;;;;0.30;0.40;0.80;0.70;0.40;0.60;0.70;1
+10817;Isabelle;Chappuis;Isabelle Chappuis;M-E;Die Mitte;M-E;Die Mitte-Fraktion. Die Mitte. EVP.;VD;Waadt;NR;Nationalrat;1;0;1971-03-17;verheiratet;3;Neuchâtel;NE;Jorat-Mézières (VD);Schweiz;2023-12-04;;2023-10-22;-;0.10;0.30;0.70;0.90;0.60;0.80;0.40;1
+4325;Isabelle;Chassot;Isabelle Chassot;M-E;Die Mitte;M-E;Die Mitte-Fraktion. Die Mitte. EVP.;FR;Freiburg;SR;Ständerat;1;0;1974-10-07;;;Morges;VD;Siviriez (FR);Schweiz;2023-12-04;;2023-11-12;-;-0.10;0.30;0.40;0.70;0.60;0.40;0.30;1
+4159;Marco;Chiesa;Marco Chiesa;SVP;;V;;TI;;SR;Ständerat;1;0;;;;;;;;;;;;0.80;-0.70;0.30;0.20;0.70;0.80;0.70;1
+15304;Clarence;Chollet;Clarence Chollet;GRÜNE;;G;;NE;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.20;0.40;0.70;0.10;0.10;1
+4252;Katja;Christ;Katja Christ;glp;;GL;;BS;;NR;Nationalrat;1;0;;;;;;;;;;;;0.10;0.70;0.80;0.80;0.70;0.40;0.70;1
+4253;Christophe;Clivaz;Christophe Clivaz;GRÜNE;;G;;VS;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.60;0.20;0.40;0.70;0.20;0.10;1
+4254;Damien;Cottier;Damien Cottier;FDP-Liberale;;RL;;NE;;NR;Nationalrat;1;0;;;;;;;;;;;;0.40;0.60;0.90;0.80;0.50;0.70;0.80;1
+4332;Mathilde;Crevoisier Crelier;Mathilde Crevoisier Crelier;SP;;S;;JU;;SR;Ständerat;1;0;;;;;;;;;;;;-0.80;0.60;0.20;0.40;0.70;0.20;0.10;1
+4219;Brigitte;Crottaz;Brigitte Crottaz;SP;;S;;VD;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.20;0.30;0.70;0.20;0.10;1
+4255;Christian;Dandrès;Christian Dandrès;SP;;S;;GE;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.10;0.30;0.40;0.20;0.10;1
+4051;Thomas;de Courten;Thomas de Courten;SVP;;V;;BL;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.80;0.70;0.50;0.80;0.90;1
+4201;Denis;de la Reussille;Denis de la Reussille;PdA;Partei der Arbeit der Schweiz;G;Grüne Fraktion;NE;Neuenburg;NR;Nationalrat;0;0;1979-03-11;;;La Chaux-de-Fonds;NE;Tramelan (BE);Schweiz;2019-12-02;2023-12-03;2019-10-20;Soldat;-1.00;-0.80;0.00;0.30;0.40;0.00;0.00;1
+4256;Simone;de Montmollin;Simone de Montmollin;FDP-Liberale;;RL;;GE;;NR;Nationalrat;1;0;;;;;;;;;;;;0.40;0.60;0.80;0.80;0.60;0.50;0.70;1
+4257;Jacqueline;de Quattro;Jacqueline de Quattro;FDP-Liberale;;RL;;VD;;NR;Nationalrat;1;0;;;;;;;;;;;;0.40;0.30;0.80;0.70;0.80;0.90;0.70;1
+14105;Linda;De Ventura;Linda De Ventura;SP;;S;;SH;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.10;0.40;0.60;0.30;0.10;1
+4160;Marcel;Dettling;Marcel Dettling;SVP;Schweizerische Volkspartei;V;Fraktion der Schweizerischen Volkspartei;SZ;Schwyz;NR;Nationalrat;1;0;1981-02-01;;;Einsiedeln;SZ;Oberiberg (SZ);Schweiz;2024-05-09;;2023-10-22;;0.85;-0.80;0.70;0.40;0.80;0.90;0.90;1
+4151;Josef;Dittli;Josef Dittli;FDP-Liberale;FDP.Die Liberalen;RL;FDP-Liberale Fraktion;UR;Uri;SR;Ständerat;1;0;1982-09-23;verheiratet;2;Attinghausen;UR;Attinghausen (UR);Schweiz;2023-12-04;;2023-10-22;Oberst i Gst;0.70;0.60;0.90;0.80;0.80;0.90;0.80;1
+4190;Marcel;Dobler;Marcel Dobler;FDP-Liberale;;RL;;SG;;NR;Nationalrat;1;0;;;;;;;;;;;;0.70;0.60;0.90;0.90;0.60;0.70;0.80;1
+10829;Martine;Docourt;Martine Docourt;SP;;S;;NE;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.20;0.40;0.60;0.20;0.10;1
+10815;Regina;Durrer-Knobel;Regina Durrer-Knobel;M-E;;M-E;;NW;;NR;Nationalrat;1;0;;;;;;;;;;;;0.10;0.20;0.60;0.70;0.50;0.30;0.40;1
+4229;Mike;Egger;Mike Egger;SVP;;V;;SG;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.60;0.70;0.60;0.80;0.80;0.90;1
+4055;Stefan;Engler;Stefan Engler;M-E;Die Mitte;M-E;Die Mitte-Fraktion. Die Mitte. EVP.;GR;Graubünden;SR;Ständerat;1;1;1960-05-30;;;Chur;GR;Albula/Alvra (Surava) (GR),Albula/Alvra (Brienz/Brinzauls (GR);Schweiz;2023-12-04;;2023-10-22;Hauptmann;0.30;-0.60;0.70;0.60;0.70;0.50;0.40;1
+4206;Erich;Ettlin;Erich Ettlin;M-E;Die Mitte;M-E;Die Mitte-Fraktion. Die Mitte. EVP.;OW;Obwalden;SR;Ständerat;1;1;1962-05-30;verheiratet;2;Kerns;OW;Kerns (OW);Schweiz;2023-12-04;;2023-10-22;Soldat;0.30;0.00;0.60;0.50;0.30;0.50;0.60;1
+4259;Alex;Farinelli;Alex Farinelli;FDP-Liberale;;RL;;TI;;NR;Nationalrat;1;0;;;;;;;;;;;;0.40;0.50;0.80;0.60;0.50;0.60;0.70;1
+4056;Daniel;Fässler;Daniel Fässler;M-E;Die Mitte;M-E;Die Mitte-Fraktion. Die Mitte. EVP.;AI;Appenzell I.-Rh.;SR;Ständerat;1;0;1979-05-13;verheiratet;3;Appenzell;AI;Appenzell (AI);Schweiz;2023-12-04;;2023-10-22;;0.40;-0.30;0.70;0.50;0.60;0.50;0.60;1
+4195;Laurence;Fehlmann Rielle;Laurence Fehlmann Rielle;SP;;S;;GE;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.60;0.10;0.30;0.40;0.20;0.10;1
+10833;Nina;Fehr Düsel;Nina Fehr Düsel;SVP;;V;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.30;0.70;0.60;0.80;0.80;0.80;1
+4077;Olivier;Feller;Olivier Feller;FDP-Liberale;;RL;;VD;;NR;Nationalrat;1;0;;;;;;;;;;;;0.40;0.60;0.70;0.70;0.50;0.60;0.70;1
+4326;Benjamin;Fischer;Benjamin Fischer;SVP;Schweizerische Volkspartei;V;Fraktion der Schweizerischen Volkspartei;ZH;Zürich;NR;Nationalrat;1;1;1991-08-16;verheiratet;3;Uster;--;Volketswil (ZH);Schweiz;2023-12-04;;2023-10-22;Hauptmann;0.80;-0.70;0.70;0.60;0.80;0.90;0.70;1
+4260;Fabien;Fivaz;Fabien Fivaz;GRÜNE;;G;;NE;;SR;Ständerat;1;0;;;;;;;;;;;;-0.80;0.70;0.20;0.60;0.70;0.20;0.10;1
+4059;Beat;Flach;Beat Flach;glp;;GL;;AG;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.30;0.70;0.80;0.80;0.90;0.60;0.60;1
+1122;Kurt;Fluri;Kurt Fluri;FDP-Liberale;;RL;;SO;;NR;Nationalrat;0;0;;;;;;;;;;;;0.50;0.30;0.80;0.70;0.40;0.60;0.70;1
+11505;Giorgio;Fonio;Giorgio Fonio;M-E;Die Mitte;M-E;Die Mitte-Fraktion. Die Mitte. EVP.;TI;Tessin;NR;Nationalrat;1;0;1984-07-01;;4;Locarno;TI;Samedan (GR);Schweiz;2023-12-04;;2023-10-22;;-0.40;0.20;0.30;0.40;0.40;0.30;0.20;1
+10835;Sylvain;Freymond;Sylvain Freymond;SVP;;V;;VD;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.60;0.40;0.70;0.80;0.80;1
+4074;Pierre-Alain;Fridez;Pierre-Alain Fridez;SP;;S;;JU;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.60;0.20;0.40;0.50;0.10;0.10;1
+4131;Claudia;Friedl;Claudia Friedl;SP;;S;;SG;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.20;0.40;0.70;0.30;0.10;1
+4261;Esther;Friedli;Esther Friedli;SVP;Schweizerische Volkspartei;V;Fraktion der Schweizerischen Volkspartei;SG;St. Gallen;SR;Ständerat;1;0;1977-06-04;verheiratet;0;Bern;--;Lützelflüh (BE),Escholzmatt-Marbach (LU);Schweiz;2023-12-04;;2023-10-22;-;0.80;-0.70;0.70;0.60;0.80;0.70;0.80;1
+4262;Tamara;Funiciello;Tamara Funiciello;SP;Sozialdemokratische Partei der Schweiz;S;Sozialdemokratische Fraktion;BE;Bern;NR;Nationalrat;1;0;1990-03-20;;;Bern;--;Gurbrü (BE);Schweiz,Italien;2023-12-04;;2023-10-22;-;-0.95;0.85;0.05;0.15;0.25;0.10;0.00;1
+4263;Andreas;Gafner;Andreas Gafner;EDU;;V;;BE;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.80;0.70;0.40;0.60;0.80;0.90;1
+15004;Benoît;Gaillard;Benoît Gaillard;SP;;S;;VD;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.40;0.10;0.30;0.40;0.20;0.10;1
+4306;Johanna;Gapany;Johanna Gapany;FDP-Liberale;FDP.Die Liberalen;RL;FDP-Liberale Fraktion;FR;Freiburg;SR;Ständerat;1;0;1988-07-25;;;Riaz;FR;Echarlens (FR);Schweiz;2023-12-04;;2023-11-12;;0.30;0.40;0.80;0.70;0.60;0.50;0.70;1
+10848;Walter;Gartmann;Walter Gartmann;SVP;;V;;SG;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.80;0.60;0.70;0.90;0.80;1
+825;Hannes;Germann;Hannes Germann;SVP;;V;;SH;;SR;Ständerat;1;0;;;;;;;;;;;;0.80;-0.50;0.90;0.80;0.60;0.70;0.90;1
+4265;Anna;Giacometti;Anna Giacometti;FDP-Liberale;FDP.Die Liberalen;RL;FDP-Liberale Fraktion;GR;Graubünden;NR;Nationalrat;1;0;1978-04-26;;;Samedan;--;Bregaglia (GR);Schweiz;2023-12-04;;2023-10-22;;0.30;0.70;0.80;0.70;0.60;0.70;0.80;1
+10807;Simone;Gianini;Simone Gianini;FDP-Liberale;;RL;;TI;;NR;Nationalrat;1;0;;;;;;;;;;;;0.60;0.30;0.80;0.60;0.50;0.50;0.70;1
+4266;Benjamin;Giezendanner;Benjamin Giezendanner;SVP;;V;;AG;;NR;Nationalrat;1;0;;;;;;;;;;;;0.70;-0.20;0.80;0.60;0.70;0.80;0.70;1
+3882;Bastien;Girod;Bastien Girod;GRÜNE;;G;;ZH;;NR;Nationalrat;0;0;;;;;;;;;;;;-0.70;0.40;0.30;0.70;0.80;0.20;0.10;1
+4161;Andreas;Glarner;Andreas Glarner;SVP;;V;;AG;;NR;Nationalrat;1;0;;;;;;;;;;;;0.95;-0.90;0.75;0.25;0.45;0.85;0.90;1
+4093;Balthasar;Glättli;Balthasar Glättli;GRÜNE;;G;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.20;0.60;0.80;0.10;0.10;1
+14803;Christian;Glur;Christian Glur;SVP;;V;;AG;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.70;0.50;0.60;0.80;0.80;1
+4181;Andrea;Gmür-Schönenberger;Andrea Gmür-Schönenberger;M-E;Die Mitte;M-E;Die Mitte-Fraktion. Die Mitte. EVP.;LU;Luzern;SR;Ständerat;1;0;1975-06-18;verheiratet;4;Wattwil;SG;Luzern (LU),Amden (SG),Kirchberg (SG) (SG);Schweiz;2023-12-04;;2023-10-22;;0.20;-0.30;0.60;0.50;0.40;0.80;0.30;1
+10809;Nadine;Gobet;Nadine Gobet;FDP-Liberale;;RL;;FR;;NR;Nationalrat;1;0;;;;;;;;;;;;0.60;0.40;0.90;0.70;0.50;0.50;0.80;1
+4137;Roger;Golay;Roger Golay;MCG;;V;;GE;;NR;Nationalrat;1;0;;;;;;;;;;;;0.70;-0.60;0.40;0.20;0.30;0.80;0.60;1
+4116;Petra;Gössi;Petra Gössi;FDP-Liberale;;RL;;SZ;;SR;Ständerat;1;0;;;;;;;;;;;;0.40;0.60;0.80;0.70;0.60;0.50;0.70;1
+4335;Michael;Götte;Michael Götte;SVP;Schweizerische Volkspartei;V;Fraktion der Schweizerischen Volkspartei;SG;St. Gallen;NR;Nationalrat;1;0;1979-06-16;verheiratet;3;St. Gallen;SG;Wildhaus-Alt St. Johann, Wildh (SG);Schweiz;2023-12-04;;2023-10-22;Oberst;0.80;-0.60;0.80;0.60;0.70;0.80;0.80;1
+4319;Michael;Graber;Michael Graber;SVP;;V;;VS;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.80;0.40;0.60;0.60;0.90;1
+806;Maya;Graf;Maya Graf;GRÜNE;;G;;BL;;SR;Ständerat;1;0;;;;;;;;;;;;-0.80;0.70;0.20;0.60;0.80;0.10;0.10;1
+4267;Corina;Gredig;Corina Gredig;glp;Grünliberale Partei;GL;Grünliberale Fraktion;ZH;Zürich;NR;Nationalrat;1;0;1987-09-08;;;Zürich;ZH;Schenkon (LU);Schweiz;2023-12-11;;2023-10-22;;-0.10;0.70;0.70;0.90;0.80;0.50;0.40;1
+3885;Jean-Pierre;Grin;Jean-Pierre Grin;SVP;;V;;VD;;NR;Nationalrat;0;0;;;;;;;;;;;;0.80;-0.70;0.60;0.40;0.70;0.80;0.70;1
+4083;Jürg;Grossen;Jürg Grossen;glp;;GL;;BE;;NR;Nationalrat;1;0;;;;;;;;;;;;0.20;0.70;0.90;0.80;0.90;0.40;0.80;1
+4162;Franz;Grüter;Franz Grüter;SVP;Schweizerische Volkspartei;V;Fraktion der Schweizerischen Volkspartei;LU;Luzern;NR;Nationalrat;1;0;1976-06-06;verheiratet;3;Luzern;LU;Ruswil (LU);Schweiz;2023-12-04;;2023-10-22;Hauptmann;0.80;-0.70;0.90;0.80;0.70;0.90;0.90;1
+4214;Niklaus-Samuel;Gugger;Niklaus-Samuel Gugger;EVP;;M-E;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.10;0.30;0.60;0.70;0.50;0.40;0.30;1
+4310;Lars;Guggisberg;Lars Guggisberg;SVP;;V;;BE;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.60;0.70;0.60;0.70;0.90;0.90;1
+4216;Diana;Gutjahr;Diana Gutjahr;SVP;;V;;TG;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.60;0.90;0.70;0.60;0.70;0.90;1
+4121;Barbara;Gysi;Barbara Gysi;SP;;S;;SG;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.10;0.30;0.60;0.20;0.10;1
+4268;Greta;Gysin;Greta Gysin;GRÜNE;;G;;TI;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.20;0.40;0.60;0.20;0.10;1
+4236;Martin;Haab;Martin Haab;SVP;;V;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.60;0.40;0.60;0.80;0.70;1
+1106;Brigitte;Häberli-Koller;Brigitte Häberli-Koller;M-E;Die Mitte;M-E;Die Mitte-Fraktion. Die Mitte. EVP.;TG;Thurgau;SR;Ständerat;1;0;1981-05-12;;;Wetzikon (ZH);ZH;Münchenbuchsee (BE);Schweiz;2023-12-04;;2023-10-22;-;0.30;-0.20;0.60;0.70;0.50;0.60;0.40;1
+11507;Patrick;Hässig;Patrick Hässig;glp;;GL;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;0.20;0.70;0.70;0.80;0.90;0.50;0.60;1
+3887;Alfred;Heer;Alfred Heer;SVP;;V;;ZH;;NR;Nationalrat;0;0;;;;;;;;;;;;0.75;-0.40;0.80;0.60;0.70;0.80;0.90;1
+4153;Peter;Hegglin;Peter Hegglin;M-E;Die Mitte;M-E;Die Mitte-Fraktion. Die Mitte. EVP.;ZG;Zug;SR;Ständerat;1;0;1979-01-08;;;Edlibach;ZG;Menzingen (ZG);Schweiz;2023-12-04;;2023-10-22;Soldat;0.20;-0.10;0.70;0.60;0.60;0.70;0.80;1
+4314;Stefanie;Heimgartner;Stefanie Heimgartner;SVP;Schweizerische Volkspartei;V;Fraktion der Schweizerischen Volkspartei;AG;Aargau;NR;Nationalrat;1;0;1987-04-25;;0;Baden;AG;Baden (AG);Schweiz;2023-12-04;;2023-10-22;Soldat;0.80;-0.60;0.70;0.50;0.60;0.90;0.80;1
+4239;Eva;Herzog;Eva Herzog;SP;;S;;BS;;SR;Ständerat;1;0;;;;;;;;;;;;-0.60;0.40;0.40;0.60;0.70;0.30;0.30;1
+4163;Erich;Hess;Erich Hess;SVP;;V;;BE;;NR;Nationalrat;1;0;;;;;;;;;;;;0.90;-0.80;0.70;0.30;0.60;0.90;0.80;1
+4094;Lorenz;Hess;Lorenz Hess;M-E;;M-E;;BE;;NR;Nationalrat;1;0;;;;;;;;;;;;0.20;0.30;0.70;0.60;0.50;0.40;0.40;1
+4317;Alois;Huber;Alois Huber;SVP;;V;;AG;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.70;0.60;0.80;0.80;0.80;1
+10831;Martin;Hübscher;Martin Hübscher;SVP;;V;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.70;0.40;0.80;0.80;0.70;1
+10844;Roman;Hug;Roman Hug;SVP;;V;;GR;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.80;0.60;0.50;0.80;0.80;1
+4270;Baptiste;Hurni;Baptiste Hurni;SP;;S;;NE;;SR;Ständerat;1;0;;;;;;;;;;;;-0.80;0.60;0.20;0.40;0.50;0.30;0.10;1
+3890;Thomas;Hurter;Thomas Hurter;SVP;;V;;SH;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.60;0.90;0.70;0.60;0.90;0.80;1
+4164;Christian;Imark;Christian Imark;SVP;;V;;SO;;NR;Nationalrat;1;0;;;;;;;;;;;;0.90;-0.80;0.80;0.30;0.70;0.90;0.90;1
+10820;Jessica;Jaccoud;Jessica Jaccoud;SP;;S;;VD;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.80;0.10;0.30;0.30;0.00;0.10;1
+4032;Beat;Jans;Beat Jans;SP;;;;BS;;BR;Bundesrat;1;0;;;;;;;;;;;;-0.80;0.60;0.20;0.40;0.60;0.30;0.10;1
+4208;Matthias Samuel;Jauslin;Matthias Samuel Jauslin;glp;;GL;;AG;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.20;0.60;0.70;0.80;0.80;0.40;0.50;1
+3891;Daniel;Jositsch;Daniel Jositsch;SP;;S;;ZH;;SR;Ständerat;1;0;;;;;;;;;;;;-0.30;0.20;0.60;0.50;0.40;0.70;0.30;1
+4331;Marc;Jost;Marc Jost;EVP;Evangelische Volkspartei der Schweiz;M-E;Die Mitte-Fraktion. Die Mitte. EVP.;BE;Bern;NR;Nationalrat;1;0;1974-02-06;verheiratet;4;Thun;BE;Wynigen (BE);Schweiz;2023-12-04;;2023-10-22;Unteroffizier;-0.10;-0.40;0.40;0.30;0.60;0.40;0.20;1
+4240;Charles;Juillard;Charles Juillard;M-E;;M-E;;JU;;SR;Ständerat;1;0;;;;;;;;;;;;0.10;0.20;0.60;0.50;0.40;0.50;0.70;1
+4218;Irène;Kälin;Irène Kälin;GRÜNE;;G;;AG;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.10;0.30;0.60;0.10;0.10;1
+4271;Sidney;Kamerzin;Sidney Kamerzin;M-E;;M-E;;VS;;NR;Nationalrat;1;0;;;;;;;;;;;;0.10;-0.20;0.60;0.50;0.50;0.70;0.40;1
+10814;Pius;Kaufmann;Pius Kaufmann;M-E;;M-E;;LU;;NR;Nationalrat;1;0;;;;;;;;;;;;0.30;-0.20;0.70;0.60;0.80;0.60;0.80;1
+4062;Karin;Keller-Sutter;Karin Keller-Sutter;FDP-Liberale;;;;SG;;BR;Bundesrat;1;0;;;;;;;;;;;;0.60;0.40;0.90;0.80;0.50;0.30;0.90;1
+4272;Delphine;Klopfenstein Broggini;Delphine Klopfenstein Broggini;GRÜNE;;G;;GE;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.90;0.70;0.10;0.60;0.80;0.20;0.10;1
+10832;Thomas;Knutti;Thomas Knutti;SVP;;V;;BE;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.60;0.40;0.70;0.80;0.80;1
+10836;Nicolas;Kolly;Nicolas Kolly;SVP;;V;;FR;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.70;0.40;0.60;0.80;0.80;1
+4225;Philipp;Kutter;Philipp Kutter;M-E;;M-E;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;0.20;0.60;0.80;0.70;0.40;0.30;0.40;1
+4118;Christian;Lohr;Christian Lohr;M-E;;M-E;;TG;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.20;0.10;0.30;0.40;0.50;0.40;0.20;1
+4327;Raphaël;Mahaim;Raphaël Mahaim;GRÜNE;;G;;VD;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.20;0.60;0.80;0.10;0.10;1
+491;Pierre-Yves;Maillard;Pierre-Yves Maillard;SP;Sozialdemokratische Partei der Schweiz;S;Sozialdemokratische Fraktion;VD;Waadt;SR;Ständerat;1;0;1971-10-19;verheiratet;2;Lausanne;VD;Ursy (Mossel) (FR);Schweiz;2023-12-04;;2023-10-22;-;-0.80;0.30;0.10;0.30;0.20;0.20;0.10;1
+4275;Vincent;Maitre;Vincent Maitre;M-E;;M-E;;GE;;NR;Nationalrat;1;0;;;;;;;;;;;;0.20;0.30;0.70;0.60;0.40;0.40;0.50;1
+4311;Piero;Marchesi;Piero Marchesi;SVP;;V;;TI;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.80;0.70;0.50;0.80;0.90;0.90;1
+4303;Marianne;Maret;Marianne Maret;M-E;;M-E;;VS;;SR;Ständerat;1;0;;;;;;;;;;;;-0.30;-0.20;0.30;0.40;0.60;0.40;0.30;1
+4228;Samira;Marti;Samira Marti;SP;;S;;BL;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.90;0.70;0.10;0.30;0.60;0.10;0.10;1
+4197;Min Li;Marti;Min Li Marti;SP;;S;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.20;0.60;0.40;0.10;0.10;1
+4167;Magdalena;Martullo-Blocher;Magdalena Martullo-Blocher;SVP;Schweizerische Volkspartei;V;Fraktion der Schweizerischen Volkspartei;GR;Graubünden;NR;Nationalrat;1;1;1969-08-13;;;Männedorf;ZH;Meilen (ZH),Schattenhalb (BE),Zürich (ZH);Schweiz;2023-12-04;;2023-10-22;-;0.85;-0.70;0.75;0.80;0.90;0.75;0.90;1
+4130;Nadine;Masshardt;Nadine Masshardt;SP;;S;;BE;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.60;0.20;0.40;0.70;0.20;0.10;1
+4144;Thomas;Matter;Thomas Matter;SVP;;V;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.80;0.70;0.60;0.80;0.90;1
+4333;Andreas;Meier;Andreas Meier;M-E;;M-E;;AG;;NR;Nationalrat;1;0;;;;;;;;;;;;0.40;0.20;0.70;0.80;0.70;0.60;0.50;1
+4277;Melanie;Mettler;Melanie Mettler;glp;;GL;;BE;;NR;Nationalrat;0;0;;;;;;;;;;;;-0.10;0.70;0.70;0.90;0.80;0.30;0.60;1
+4198;Mattea;Meyer;Mattea Meyer;SP;;S;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.90;0.80;0.10;0.30;0.70;0.10;0.10;1
+4278;Sophie;Michaud Gigon;Sophie Michaud Gigon;GRÜNE;;G;;VD;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.20;0.40;0.80;0.10;0.10;1
+10810;Simon;Michel;Simon Michel;FDP-Liberale;;RL;;SO;;NR;Nationalrat;1;0;;;;;;;;;;;;0.50;0.70;0.90;0.80;0.60;0.50;0.80;1
+4309;Matthias;Michel;Matthias Michel;FDP-Liberale;FDP.Die Liberalen;RL;FDP-Liberale Fraktion;ZG;Zug;SR;Ständerat;1;0;1976-10-15;;4;Thal;SG;Netstal (GL),Zug (ZG);Schweiz;2023-12-04;;2023-10-22;Gefreiter;0.50;0.60;0.80;0.80;0.40;0.70;0.70;1
+4223;Fabian;Molina;Fabian Molina;SP;Sozialdemokratische Partei der Schweiz;S;Sozialdemokratische Fraktion;ZH;Zürich;NR;Nationalrat;1;0;1990-07-08;;;Uster;--;Neunkirch (SH),St. Gallen (SG);Schweiz;2023-12-04;;2023-10-22;;-0.80;0.70;0.20;0.40;0.30;0.10;0.10;1
+3897;Tiana Angelina;Moser;Tiana Angelina Moser;glp;Grünliberale Partei;GL;Grünliberale Fraktion;ZH;Zürich;SR;Ständerat;1;0;1979-04-06;;;Zürich;ZH;Würenlos (AG);Schweiz;2023-12-11;;2023-11-19;-;-0.20;0.70;0.70;0.80;0.60;0.20;0.40;1
+10802;Benjamin;Mühlemann;Benjamin Mühlemann;FDP-Liberale;;RL;;GL;;SR;Ständerat;1;0;;;;;;;;;;;;0.60;0.40;0.80;0.60;0.50;0.90;0.80;1
+4097;Leo;Müller;Leo Müller;M-E;;M-E;;LU;;NR;Nationalrat;1;0;;;;;;;;;;;;0.30;-0.20;0.70;0.60;0.50;0.60;0.40;1
+4207;Damian;Müller;Damian Müller;FDP-Liberale;FDP.Die Liberalen;RL;FDP-Liberale Fraktion;LU;Luzern;SR;Ständerat;1;0;1984-10-25;;0;Ermensee;LU;Ermensee (LU);Schweiz;2023-12-04;;2023-10-22;Obergefreiter;0.40;0.60;0.80;0.70;0.60;0.80;0.90;1
+4063;Stefan;Müller-Altermatt;Stefan Müller-Altermatt;M-E;;M-E;;SO;;NR;Nationalrat;1;0;;;;;;;;;;;;0.10;-0.20;0.40;0.70;0.80;0.50;0.30;1
+4134;Martina;Munz;Martina Munz;SP;;S;;SH;;NR;Nationalrat;0;0;;;;;;;;;;;;-0.80;0.60;0.20;0.40;0.70;0.10;0.10;1
+4193;Philippe;Nantermod;Philippe Nantermod;FDP-Liberale;;RL;;VS;;NR;Nationalrat;1;0;;;;;;;;;;;;0.70;0.80;0.90;0.70;0.60;0.60;0.80;1
+10811;Reto;Nause;Reto Nause;M-E;;M-E;;BE;;NR;Nationalrat;1;0;;;;;;;;;;;;0.30;0.40;0.80;0.70;0.50;0.70;0.60;1
+4168;Jacques;Nicolet;Jacques Nicolet;SVP;;V;;VD;;NR;Nationalrat;1;0;;;;;;;;;;;;0.60;-0.30;0.70;0.50;0.60;0.40;0.70;1
+1279;Roger;Nordmann;Roger Nordmann;SP;;S;;VD;;NR;Nationalrat;0;0;;;;;;;;;;;;-0.70;0.30;0.20;0.80;0.90;0.10;0.10;1
+3899;Eric;Nussbaumer;Eric Nussbaumer;SP;;S;;BL;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.70;0.60;0.30;0.70;0.80;0.20;0.10;1
+4222;Nicolò;Paganini;Nicolò Paganini;M-E;;M-E;;SG;;NR;Nationalrat;1;0;;;;;;;;;;;;0.10;0.20;0.70;0.60;0.80;0.70;0.30;1
+4169;Pierre-André;Page;Pierre-André Page;SVP;;V;;FR;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.60;0.70;0.60;0.80;0.80;0.70;1
+10840;Yvan;Pahud;Yvan Pahud;SVP;;V;;VD;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.80;0.60;0.80;0.90;0.90;1
+10842;Paolo;Pamini;Paolo Pamini;SVP;;V;;TI;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.70;0.60;0.70;0.80;0.80;1
+1108;Guy;Parmelin;Guy Parmelin;SVP;;;;VD;;BR;Bundesrat;1;0;;;;;;;;;;;;0.70;-0.60;0.80;0.80;0.70;0.90;0.70;1
+14904;Martin;Pfister;Martin Pfister;M-E;;;;ZG;;BR;Bundesrat;1;0;;;;;;;;;;;;0.30;0.40;0.60;0.50;0.40;0.80;0.50;1
+1109;Gerhard;Pfister;Gerhard Pfister;M-E;;M-E;;ZG;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.10;-0.20;0.70;0.80;0.70;0.80;0.50;1
+4109;Valérie;Piller Carrard;Valérie Piller Carrard;SP;;S;;FR;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.60;0.20;0.30;0.40;0.20;0.10;1
+10839;Mauro;Poggia;Mauro Poggia;MCG;Mouvement Citoyens Genevois;V;Fraktion der Schweizerischen Volkspartei;GE;Genf;SR;Ständerat;1;0;1980-09-09;;;Moutier;BE;Meyrin (GE);Schweiz,Italien;2023-12-05;;2023-11-12;Soldat;0.30;-0.30;0.20;0.40;0.50;0.40;0.30;1
+4280;Léonore;Porchet;Léonore Porchet;GRÜNE;;G;;VD;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.10;0.40;0.80;0.10;0.20;1
+4141;Hans-Peter;Portmann;Hans-Peter Portmann;FDP-Liberale;;RL;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;0.60;0.70;0.90;0.80;0.60;0.70;0.80;1
+3999;Katharina;Prelicz-Huber;Katharina Prelicz-Huber;GRÜNE;;G;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.60;0.10;0.40;0.60;0.20;0.10;1
+4281;Jon;Pult;Jon Pult;SP;;S;;GR;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.20;0.60;0.80;0.30;0.10;1
+4046;Lorenzo;Quadri;Lorenzo Quadri;Lega;;V;;TI;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.40;0.30;0.60;0.80;0.70;1
+4282;Thomas;Rechsteiner;Thomas Rechsteiner;M-E;;M-E;;AI;;NR;Nationalrat;1;0;;;;;;;;;;;;0.40;-0.30;0.60;0.70;0.60;0.80;0.50;1
+4072;Fabio;Regazzi;Fabio Regazzi;M-E;Die Mitte;M-E;Die Mitte-Fraktion. Die Mitte. EVP.;TI;Tessin;SR;Ständerat;1;1;1962-06-22;;;Locarno;TI;Locarno (TI);Schweiz;2023-12-04;;2023-11-19;Wachtmeister;0.60;-0.30;0.90;0.80;0.50;0.60;0.80;1
+3901;Lukas;Reimann;Lukas Reimann;SVP;;V;;SG;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.70;0.40;0.80;0.80;0.90;1
+10823;Estelle;Revaz;Estelle Revaz;SP;;S;;GE;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.10;0.30;0.30;0.10;0.10;1
+4204;Beat;Rieder;Beat Rieder;M-E;;M-E;;VS;;SR;Ständerat;1;0;;;;;;;;;;;;0.35;-0.50;0.70;0.40;0.80;0.60;0.60;1
+10830;Katja;Riem;Katja Riem;SVP;;V;;BE;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.60;0.40;0.70;0.80;0.80;1
+10801;Christoph;Riner;Christoph Riner;SVP;;V;;AG;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.80;0.60;0.70;0.80;0.80;1
+4313;Maja;Riniker;Maja Riniker;FDP-Liberale;FDP.Die Liberalen;RL;FDP-Liberale Fraktion;AG;Aargau;NR;Nationalrat;1;0;1978-05-23;;;Aarau;AG;Lenzburg (AG),Villigen (AG),Habsburg (AG);Schweiz;2023-12-04;;2023-10-22;-;0.60;0.40;0.80;0.70;0.60;0.90;0.70;1
+4052;Markus;Ritter;Markus Ritter;M-E;;M-E;;SG;;NR;Nationalrat;1;0;;;;;;;;;;;;0.40;-0.40;0.70;0.50;0.60;0.80;0.60;1
+4220;Benjamin;Roduit;Benjamin Roduit;M-E;;M-E;;VS;;NR;Nationalrat;1;0;;;;;;;;;;;;0.40;-0.60;0.30;0.60;0.80;0.50;0.20;1
+10824;Anna;Rosenwasser;Anna Rosenwasser;SP;;S;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.90;0.80;0.10;0.30;0.40;0.10;0.10;1
+4231;Viktor;Rossi;Viktor Rossi;glp;;;;BE;;;;1;0;;;;;;;;;;;;0.10;0.70;0.70;0.80;0.60;0.60;0.50;1
+4100;Albert;Rösti;Albert Rösti;SVP;;;;BE;;BR;Bundesrat;1;0;;;;;;;;;;;;0.80;-0.60;0.70;0.60;0.90;0.70;0.60;1
+4283;Franziska;Roth;Franziska Roth;SP;;S;;SO;;SR;Ständerat;1;0;;;;;;;;;;;;-0.80;0.60;0.10;0.30;0.40;0.20;0.10;1
+10821;David;Roth;David Roth;SP;;S;;LU;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.10;0.30;0.40;0.10;0.10;1
+4284;Marie-France;Roth Pasquier;Marie-France Roth Pasquier;M-E;;M-E;;FR;;NR;Nationalrat;1;0;;;;;;;;;;;;0.10;0.20;0.40;0.50;0.60;0.30;0.30;1
+4329;Daniel;Ruch;Daniel Ruch;FDP-Liberale;;RL;;VD;;NR;Nationalrat;1;0;;;;;;;;;;;;0.50;0.30;0.90;0.60;0.60;0.50;0.80;1
+4285;Monika;Rüegger;Monika Rüegger;SVP;;V;;OW;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.80;0.80;0.30;0.60;0.80;0.80;1
+10852;Hans Jörg;Rüegsegger;Hans Jörg Rüegsegger;SVP;;V;;BE;;NR;Nationalrat;1;0;;;;;;;;;;;;0.70;-0.60;0.60;0.40;0.50;0.70;0.70;1
+11506;Farah;Rumy;Farah Rumy;SP;;S;;SO;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.20;0.40;0.30;0.20;0.10;1
+4125;Gregor;Rutz;Gregor Rutz;SVP;;V;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.40;0.90;0.70;0.60;0.80;0.90;1
+4286;Franziska;Ryser;Franziska Ryser;GRÜNE;;G;;SG;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.30;0.70;0.80;0.10;0.10;1
+4172;Werner;Salzmann;Werner Salzmann;SVP;;V;;BE;;SR;Ständerat;1;0;;;;;;;;;;;;0.80;-0.70;0.80;0.60;0.70;0.90;0.80;1
+4202;Regine;Sauter;Regine Sauter;FDP-Liberale;;RL;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;0.40;0.60;0.80;0.80;0.50;0.60;0.70;1
+4287;Barbara;Schaffner;Barbara Schaffner;glp;;GL;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.20;0.70;0.60;0.80;0.90;0.30;0.40;1
+4124;Peter;Schilliger;Peter Schilliger;FDP-Liberale;FDP.Die Liberalen;RL;FDP-Liberale Fraktion;LU;Luzern;NR;Nationalrat;1;0;1980-08-03;;3;Udligenswil;--;Udligenswil (LU),Weggis (LU);Schweiz;2023-12-04;;2023-10-22;Korporal;0.70;0.60;0.90;0.80;0.90;0.70;0.80;1
+10826;Nina;Schläfli;Nina Schläfli;SP;;S;;TG;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.10;0.40;0.50;0.20;0.10;1
+4234;Therese;Schläpfer;Therese Schläpfer;SVP;;V;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.80;0.60;0.70;0.80;0.90;1
+4288;Marionna;Schlatter;Marionna Schlatter;GRÜNE;;G;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.20;0.40;0.80;0.10;0.20;1
+14809;Ueli;Schmezer;Ueli Schmezer;SP;;S;;BE;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.70;0.40;0.10;0.30;0.30;0.20;0.10;1
+10843;Pascal;Schmid;Pascal Schmid;SVP;;V;;TG;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.80;0.60;0.40;0.50;0.80;0.80;1
+4078;Martin;Schmid;Martin Schmid;FDP-Liberale;;RL;;GR;;SR;Ständerat;1;0;;;;;;;;;;;;0.60;0.40;0.80;0.70;0.80;0.50;0.70;1
+4060;Daniela;Schneeberger;Daniela Schneeberger;FDP-Liberale;;RL;;BL;;NR;Nationalrat;1;0;;;;;;;;;;;;0.70;0.40;0.90;0.80;0.60;0.80;0.90;1
+4289;Meret;Schneider;Meret Schneider;GRÜNE;;G;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.70;0.60;0.20;0.70;0.80;0.20;0.20;1
+4040;Elisabeth;Schneider-Schneiter;Elisabeth Schneider-Schneiter;M-E;;M-E;;BL;;NR;Nationalrat;1;0;;;;;;;;;;;;0.10;0.30;0.80;0.70;0.40;0.60;0.50;1
+10841;Markus;Schnyder;Markus Schnyder;SVP;;V;;GL;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.30;0.90;0.60;0.70;0.90;0.80;1
+1159;Pirmin;Schwander;Pirmin Schwander;SVP;;V;;SZ;;SR;Ständerat;1;0;;;;;;;;;;;;0.80;-0.70;0.80;0.60;0.90;0.90;0.90;1
+4199;Priska;Seiler Graf;Priska Seiler Graf;SP;;S;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.20;0.30;0.60;0.10;0.10;1
+4290;Andri;Silberschmidt;Andri Silberschmidt;FDP-Liberale;;RL;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;0.60;0.80;0.90;0.80;0.50;0.40;0.70;1
+4173;Sandra;Sollberger;Sandra Sollberger;SVP;;V;;BL;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.60;0.90;0.60;0.70;0.80;0.90;1
+1120;Carlo;Sommaruga;Carlo Sommaruga;SP;Sozialdemokratische Partei der Schweiz;S;Sozialdemokratische Fraktion;GE;Genf;SR;Ständerat;1;0;1980-06-27;;4;Zürich;ZH;Lugano (TI);Schweiz,Italien;2023-12-04;;2023-11-12;Soldat;-0.80;0.60;0.10;0.20;0.30;0.10;0.10;1
+11404;Daniel;Sormanni;Daniel Sormanni;MCG;;V;;GE;;NR;Nationalrat;1;0;;;;;;;;;;;;0.20;-0.10;0.30;0.40;0.60;0.70;0.40;1
+4292;Simon;Stadler;Simon Stadler;M-E;;M-E;;UR;;NR;Nationalrat;1;0;;;;;;;;;;;;0.10;0.20;0.60;0.70;0.60;0.80;0.70;1
+214;Luzi;Stamm;Luzi Stamm;SVP;;V;;AG;;NR;Nationalrat;0;0;;;;;;;;;;;;0.80;-0.60;0.60;0.40;0.70;0.80;0.70;1
+14810;Fabienne;Stämpfli;Fabienne Stämpfli;glp;;GL;;BE;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.20;0.70;0.70;0.80;0.80;0.30;0.60;1
+4241;Jakob;Stark;Jakob Stark;SVP;Schweizerische Volkspartei;V;Fraktion der Schweizerischen Volkspartei;TG;Thurgau;SR;Ständerat;1;0;1958-09-08;verheiratet;2;Frauenfeld;TG;Hohentannen (TG),Teufen (AR);Schweiz;2023-12-04;;2023-10-22;Fachoffizier (Hptm);0.80;-0.20;0.70;0.60;0.70;0.80;0.90;1
+4174;Barbara;Steinemann;Barbara Steinemann;SVP;;V;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;0.90;-0.70;0.90;0.60;0.80;0.80;0.90;1
+10847;Thomas;Stettler;Thomas Stettler;SVP;;V;;JU;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.70;0.40;0.60;0.70;0.80;1
+11504;Simon;Stocker;Simon Stocker;SP;;S;;SH;;SR;Ständerat;0;0;;;;;;;;;;;;-0.80;0.70;0.10;0.30;0.60;0.10;0.10;1
+4312;Bruno;Storni;Bruno Storni;SP;;S;;TI;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.60;0.20;0.70;0.80;0.30;0.10;1
+4293;Manuel;Strupler;Manuel Strupler;SVP;;V;;TG;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.80;0.60;0.70;0.90;0.90;1
+4295;Gabriela;Suter;Gabriela Suter;SP;;S;;AG;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.70;0.60;0.20;0.60;0.80;0.10;0.10;1
+10849;Vroni;Thalmann-Bieri;Vroni Thalmann-Bieri;SVP;;V;;LU;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.70;0.40;0.60;0.80;0.80;1
+10808;Heinz;Theiler;Heinz Theiler;FDP-Liberale;FDP.Die Liberalen;RL;FDP-Liberale Fraktion;SZ;Schwyz;NR;Nationalrat;1;1;1970-11-12;;;Zug;ZG;Entlebuch (LU);Schweiz;2023-12-04;;2023-10-22;Gefreiter;0.70;0.40;0.80;0.70;0.60;0.90;0.80;1
+4221;Michael;Töngi;Michael Töngi;GRÜNE;;G;;LU;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.70;0.80;0.20;0.40;0.70;0.20;0.10;1
+4128;Aline;Trede;Aline Trede;GRÜNE;;G;;BE;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.60;0.20;0.40;0.80;0.10;0.10;1
+10827;Jean;Tschopp;Jean Tschopp;SP;;S;;VD;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.10;0.30;0.40;0.20;0.10;1
+4175;Mauro;Tuena;Mauro Tuena;SVP;;V;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.70;0.60;0.70;0.90;0.80;1
+10825;Brenda;Tuosto;Brenda Tuosto;SP;;S;;VD;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.60;0.20;0.40;0.70;0.20;0.10;1
+4065;Nadja;Umbricht Pieren;Nadja Umbricht Pieren;SVP;;V;;BE;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.60;0.80;0.60;0.70;0.70;0.80;1
+4242;Céline;Vara;Céline Vara;GRÜNE;;G;;NE;;SR;Ständerat;0;0;;;;;;;;;;;;-0.80;0.70;0.20;0.40;0.80;0.10;0.10;1
+10806;Kris;Vietze;Kris Vietze;FDP-Liberale;;RL;;TG;;NR;Nationalrat;1;0;;;;;;;;;;;;0.60;0.70;0.90;0.80;0.60;0.50;0.90;1
+4296;Susanne;Vincenz-Stauffacher;Susanne Vincenz-Stauffacher;FDP-Liberale;FDP.Die Liberalen;RL;FDP-Liberale Fraktion;SG;St. Gallen;NR;Nationalrat;1;0;1967-01-21;verheiratet;2;Wattwil;SG;Glarus Süd (GL),Glarus Süd (GL),Trun (GR);Schweiz,Schweiz;2023-12-04;;2023-10-22;;0.60;0.70;0.80;0.80;0.90;0.70;0.80;1
+4324;Patricia;von Falkenstein;Patricia von Falkenstein;LDP;Liberal-Demokratische Partei;RL;FDP-Liberale Fraktion;BS;Basel-Stadt;NR;Nationalrat;1;0;1961-04-11;ledig;2;Zürich;ZH;Basel (BS),Aarau (AG);Schweiz;2023-12-04;;2023-10-22;;0.60;0.70;0.80;0.70;0.60;0.50;0.70;1
+10838;Erich;Vontobel;Erich Vontobel;EDU;;V;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.80;0.60;0.30;0.50;0.70;0.80;1
+4297;Nicolas;Walder;Nicolas Walder;GRÜNE;;G;;GE;;NR;Nationalrat;0;0;;;;;;;;;;;;-0.70;0.80;0.20;0.50;0.80;0.20;0.10;1
+4177;Bruno;Walliser;Bruno Walliser;SVP;;V;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.70;0.90;0.60;0.50;0.90;0.90;1
+4142;Beat;Walti;Beat Walti;FDP-Liberale;FDP.Die Liberalen;RL;FDP-Liberale Fraktion;ZH;Zürich;NR;Nationalrat;1;0;1971-02-10;;;Bauma;ZH;Dürrenäsch (AG),Zollikon (ZH);Schweiz;2023-12-04;;2023-10-22;Oberleutnant aD;0.60;0.40;0.90;0.80;0.60;0.70;0.80;1
+10834;Ernst;Wandfluh;Ernst Wandfluh;SVP;;V;;BE;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.60;0.70;0.40;0.50;0.70;0.60;1
+4224;Flavia;Wasserfallen;Flavia Wasserfallen;SP;;S;;BE;;SR;Ständerat;1;0;;;;;;;;;;;;-0.80;0.70;0.20;0.50;0.70;0.30;0.10;1
+3912;Christian;Wasserfallen;Christian Wasserfallen;FDP-Liberale;;RL;;BE;;NR;Nationalrat;1;0;;;;;;;;;;;;0.60;0.50;0.80;0.70;0.90;0.60;0.80;1
+4323;Céline;Weber;Céline Weber;glp;;GL;;VD;;NR;Nationalrat;1;0;;;;;;;;;;;;0.15;0.70;0.75;0.85;0.80;0.40;0.60;1
+4194;Laurent;Wehrli;Laurent Wehrli;FDP-Liberale;;RL;;VD;;NR;Nationalrat;1;0;;;;;;;;;;;;0.40;0.20;0.80;0.70;0.60;0.50;0.70;1
+4298;Manuela;Weichelt;Manuela Weichelt;Al;;G;;ZG;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.90;0.80;0.10;0.30;0.80;0.10;0.10;1
+4057;Cédric;Wermuth;Cédric Wermuth;SP;;S;;AG;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.90;0.80;0.10;0.30;0.60;0.20;0.10;1
+4299;Felix;Wettstein;Felix Wettstein;GRÜNE;;G;;SO;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.20;0.60;0.80;0.20;0.30;1
+4152;Hans;Wicki;Hans Wicki;FDP-Liberale;FDP.Die Liberalen;RL;FDP-Liberale Fraktion;NW;Nidwalden;SR;Ständerat;1;0;1975-11-15;verheiratet;2;Luzern;LU;Menznau (LU),Horw (LU);Schweiz;2023-12-04;;2023-10-22;Hauptmann;0.60;0.40;0.90;0.70;0.50;0.80;0.80;1
+4300;Céline;Widmer;Céline Widmer;SP;;S;;ZH;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.20;0.40;0.50;0.30;0.10;1
+4305;Priska;Wismer-Felder;Priska Wismer-Felder;M-E;;M-E;;LU;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.10;0.20;0.60;0.80;0.90;0.40;0.50;1
+4237;Benedikt;Würth;Benedikt Würth;M-E;Die Mitte;M-E;Die Mitte-Fraktion. Die Mitte. EVP.;SG;St. Gallen;SR;Ständerat;1;0;1971-12-14;;;St. Gallen;SG;Rapperswil-Jona (SG),Berg (SG) (SG);Schweiz,Italien;2023-12-04;;2023-10-22;Korporal;0.20;0.30;0.70;0.80;0.60;0.50;0.40;1
+4318;Sarah;Wyss;Sarah Wyss;SP;;S;;BS;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.60;0.20;0.40;0.30;0.10;0.10;1
+10846;Rémy;Wyssmann;Rémy Wyssmann;SVP;;V;;SO;;NR;Nationalrat;1;0;;;;;;;;;;;;0.80;-0.60;0.70;0.40;0.60;0.70;0.90;1
+4243;Heidi;Z'graggen;Heidi Z'graggen;M-E;;M-E;;UR;;SR;Ständerat;1;0;;;;;;;;;;;;0.30;-0.20;0.70;0.60;0.60;0.70;0.50;1
+4244;Mathias;Zopfi;Mathias Zopfi;GRÜNE;GRÜNE Schweiz;G;Grüne Fraktion;GL;Glarus;SR;Ständerat;1;0;1983-12-14;;;Glarus;--;Schwanden GL (GL);Schweiz;2023-12-04;;2023-10-22;Major;-0.40;0.20;0.40;0.50;0.60;0.60;0.30;1
+10851;Andrea;Zryd;Andrea Zryd;SP;Sozialdemokratische Partei der Schweiz;S;Sozialdemokratische Fraktion;BE;Bern;NR;Nationalrat;1;0;1975-10-24;ledig;2;Adelboden;BE;;Schweiz;2023-12-04;;2023-10-22;-;-0.70;0.30;0.20;0.40;0.50;0.60;0.10;1
+4179;David;Zuberbühler;David Zuberbühler;SVP;;V;;AR;;NR;Nationalrat;0;0;;;;;;;;;;;;0.80;-0.80;0.70;0.50;0.60;0.90;0.80;1
+10822;Ursula;Zybach;Ursula Zybach;SP;;S;;BE;;NR;Nationalrat;1;0;;;;;;;;;;;;-0.80;0.70;0.30;0.60;0.50;0.20;0.10;1

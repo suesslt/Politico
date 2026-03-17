@@ -7,11 +7,8 @@ final class Transcript: Model, Content, @unchecked Sendable {
     @ID(custom: "id", generatedBy: .user)
     var id: Int?
 
-    @Field(key: "person_number")
-    var personNumber: Int?
-
-    @Field(key: "speaker_full_name")
-    var speakerFullName: String?
+    @OptionalParent(key: "member_council_id")
+    var memberCouncil: MemberCouncil?
 
     @Field(key: "speaker_function")
     var speakerFunction: String?
@@ -28,14 +25,8 @@ final class Transcript: Model, Content, @unchecked Sendable {
     @Field(key: "end_time")
     var endTime: Date?
 
-    @Field(key: "council_name")
-    var councilName: String?
-
-    @Field(key: "parl_group_abbreviation")
-    var parlGroupAbbreviation: String?
-
-    @Field(key: "canton_abbreviation")
-    var cantonAbbreviation: String?
+    @OptionalParent(key: "council_id")
+    var council: Council?
 
     @Field(key: "sort_order")
     var sortOrder: Int?
@@ -43,8 +34,8 @@ final class Transcript: Model, Content, @unchecked Sendable {
     @Field(key: "type")
     var type: Int?
 
-    @Field(key: "id_subject")
-    var idSubject: Int?
+    @OptionalParent(key: "subject_id")
+    var subject: Subject?
 
     init() {}
 

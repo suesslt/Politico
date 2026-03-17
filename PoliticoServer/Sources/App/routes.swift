@@ -17,6 +17,12 @@ func routes(_ app: Application) throws {
     let syncController = SyncController()
     try protected.register(collection: syncController)
 
+    let memberController = MemberController()
+    try protected.register(collection: memberController)
+
+    let businessController = BusinessController()
+    try protected.register(collection: businessController)
+
     // Root redirect
     app.get { req -> Response in
         req.redirect(to: "/sessions")

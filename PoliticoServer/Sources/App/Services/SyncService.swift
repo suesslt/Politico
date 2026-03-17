@@ -56,38 +56,81 @@ struct SyncService: Sendable {
         try await updateSyncStatus(entity: "meetings", sessionID: sessionID, status: "completed", items: meetings.count, on: db)
         logger.info("Synced \(meetings.count) meetings for session \(sessionID)")
 
-        // 5. Sync Subjects + SubjectBusinesses per Meeting
+        // 5. Sync Subjects + SubjectBusinesses per Meeting (incremental: skip meetings that already have subjects)
         try await updateSyncStatus(entity: "subjects", sessionID: sessionID, status: "syncing", on: db)
+        let meetingIDs = meetings.compactMap { $0.idInt }
+        let existingSubjectMeetingIDs = Set(
+            try await Subject.query(on: db)
+                .filter(\.$meeting.$id ~~ meetingIDs)
+                .all()
+                .compactMap { $0.$meeting.id }
+        )
+        let newMeetings = meetings.filter { !existingSubjectMeetingIDs.contains($0.idInt ?? 0) }
+        let totalMeetings = newMeetings.count
+        logger.info("Subjects: \(existingSubjectMeetingIDs.count) meetings already synced, \(totalMeetings) new")
         var subjectCount = 0
-        for meeting in meetings {
-            let subjects = try await parlament.fetchSubjectsForMeeting(meetingID: meeting.ID)
-            for subDTO in subjects {
-                try await upsertSubject(subDTO, on: db)
-                subjectCount += 1
+        var subjectErrors = 0
+        for (mIdx, meeting) in newMeetings.enumerated() {
+            do {
+                let subjects = try await parlament.fetchSubjectsForMeeting(meetingID: meeting.ID)
+                for subDTO in subjects {
+                    try await upsertSubject(subDTO, on: db)
+                    subjectCount += 1
 
-                let subjectBusinesses = try await parlament.fetchSubjectBusinesses(subjectID: subDTO.ID)
-                for sbDTO in subjectBusinesses {
-                    try await upsertSubjectBusiness(sbDTO, on: db)
+                    do {
+                        let subjectBusinesses = try await parlament.fetchSubjectBusinesses(subjectID: subDTO.ID)
+                        for sbDTO in subjectBusinesses {
+                            try await upsertSubjectBusiness(sbDTO, on: db)
+                        }
+                    } catch {
+                        logger.warning("Failed to fetch subject businesses for subject \(subDTO.ID): \(error)")
+                    }
                 }
+            } catch {
+                subjectErrors += 1
+                logger.warning("Failed to fetch subjects for meeting \(meeting.ID): \(error)")
+            }
+            if (mIdx + 1) % 5 == 0 {
+                logger.info("Subjects progress: \(mIdx + 1)/\(totalMeetings) meetings (\(subjectCount) subjects)")
             }
         }
         try await updateSyncStatus(entity: "subjects", sessionID: sessionID, status: "completed", items: subjectCount, on: db)
-        logger.info("Synced \(subjectCount) subjects for session \(sessionID)")
+        logger.info("Synced \(subjectCount) new subjects (\(subjectErrors) errors)")
 
-        // 6. Sync Transcripts via SubjectBusinesses
+        // 6. Sync Transcripts (incremental: only subjects that have no transcripts yet, scoped to session)
         try await updateSyncStatus(entity: "transcripts", sessionID: sessionID, status: "syncing", on: db)
-        let allSubjectBusinesses = try await SubjectBusiness.query(on: db).all()
+        let sessionSubjectIDs = try await Subject.query(on: db)
+            .filter(\.$meeting.$id ~~ meetingIDs)
+            .all()
+            .compactMap { $0.id }
+        let subjectsWithTranscripts = Set(
+            try await Transcript.query(on: db)
+                .filter(\.$subject.$id ~~ sessionSubjectIDs)
+                .all()
+                .compactMap { $0.$subject.id }
+        )
+        let newSubjectIDs = sessionSubjectIDs.filter { !subjectsWithTranscripts.contains($0) }
+        logger.info("Transcripts: \(subjectsWithTranscripts.count) subjects already synced, \(newSubjectIDs.count) new")
         var transcriptCount = 0
-        let processedSubjects = Set(allSubjectBusinesses.compactMap { $0.idSubject })
-        for idSubject in processedSubjects {
-            let transcripts = try await parlament.fetchTranscriptsForSubject(idSubject: String(idSubject))
-            for dto in transcripts {
-                try await upsertTranscript(dto, idSubject: idSubject, on: db)
-                transcriptCount += 1
+        var transcriptErrors = 0
+        let totalSubjects = newSubjectIDs.count
+        for (sIdx, idSubject) in newSubjectIDs.enumerated() {
+            do {
+                let transcripts = try await parlament.fetchTranscriptsForSubject(idSubject: String(idSubject))
+                for dto in transcripts {
+                    try await upsertTranscript(dto, idSubject: idSubject, on: db)
+                    transcriptCount += 1
+                }
+            } catch {
+                transcriptErrors += 1
+                logger.warning("Failed to fetch transcripts for subject \(idSubject): \(error)")
+            }
+            if (sIdx + 1) % 25 == 0 {
+                logger.info("Transcripts progress: \(sIdx + 1)/\(totalSubjects) subjects (\(transcriptCount) transcripts)")
             }
         }
         try await updateSyncStatus(entity: "transcripts", sessionID: sessionID, status: "completed", items: transcriptCount, on: db)
-        logger.info("Synced \(transcriptCount) transcripts for session \(sessionID)")
+        logger.info("Synced \(transcriptCount) transcripts (\(transcriptErrors) errors)")
 
         // 7. Sync Votes
         try await updateSyncStatus(entity: "votes", sessionID: sessionID, status: "syncing", on: db)
@@ -131,15 +174,15 @@ struct SyncService: Sendable {
         for (index, member) in allMembers.enumerated() {
             do {
                 // Sync interests (full replace)
-                let interests = try await parlament.fetchPersonInterests(personNumber: member.personNumber)
-                try await PersonInterest.query(on: db).filter(\.$personNumber == member.personNumber).delete()
+                let interests = try await parlament.fetchPersonInterests(personNumber: member.id!)
+                try await PersonInterest.query(on: db).filter(\.$memberCouncil.$id == member.id!).delete()
                 for dto in interests {
-                    try await insertPersonInterest(dto, on: db)
+                    try await insertPersonInterest(dto, memberCouncilID: member.id!, on: db)
                     interestCount += 1
                 }
 
                 // Sync occupation (store first result on member_council)
-                let occupations = try await parlament.fetchPersonOccupations(personNumber: member.personNumber)
+                let occupations = try await parlament.fetchPersonOccupations(personNumber: member.id!)
                 if let occ = occupations.first {
                     member.occupationName = occ.OccupationName
                     member.employer = occ.Employer
@@ -149,7 +192,7 @@ struct SyncService: Sendable {
                 }
             } catch {
                 errorCount += 1
-                logger.warning("Failed to sync person data for \(member.firstName) \(member.lastName) (\(member.personNumber)): \(error)")
+                logger.warning("Failed to sync person data for \(member.firstName) \(member.lastName) (\(member.id ?? 0)): \(error)")
             }
 
             if (index + 1) % 10 == 0 {
@@ -159,16 +202,89 @@ struct SyncService: Sendable {
         try await updateSyncStatus(entity: "person_data", sessionID: sessionID, status: "completed", items: interestCount + occupationCount, on: db)
         logger.info("Synced \(interestCount) interests, \(occupationCount) occupations (\(errorCount) errors)")
 
-        // 10. Final status
+        // 10. Sync Committees + MemberCommittees
+        try await updateSyncStatus(entity: "committees", sessionID: sessionID, status: "syncing", on: db)
+        let committees = try await parlament.fetchCommittees()
+        for dto in committees {
+            try await upsertCommittee(dto, on: db)
+        }
+        logger.info("Synced \(committees.count) committees")
+
+        var memberCommitteeCount = 0
+        for committee in committees {
+            do {
+                let members = try await parlament.fetchMemberCommittees(committeeNumber: committee.ID)
+                // Full replace for this committee
+                if let committeeModel = try await Committee.find(committee.ID, on: db) {
+                    try await MemberCommittee.query(on: db)
+                        .filter(\.$committee.$id == committeeModel.id!)
+                        .delete()
+                }
+                for dto in members {
+                    guard let personNumber = dto.PersonNumber, let committeeNumber = dto.CommitteeNumber else { continue }
+                    // PersonNumber == member_council.id
+                    guard try await MemberCouncil.find(personNumber, on: db) != nil else { continue }
+                    let mc = MemberCommittee(
+                        memberCouncilID: personNumber,
+                        committeeID: committeeNumber,
+                        function: dto.CommitteeFunctionName
+                    )
+                    mc.modified = dto.modifiedParsed
+                    try await mc.create(on: db)
+                    memberCommitteeCount += 1
+                }
+            } catch {
+                logger.warning("Failed to sync members for committee \(committee.ID): \(error)")
+            }
+        }
+        try await updateSyncStatus(entity: "committees", sessionID: sessionID, status: "completed", items: memberCommitteeCount, on: db)
+        logger.info("Synced \(memberCommitteeCount) committee memberships")
+
+        // 11. Final status
         try await updateSyncStatus(entity: "full_sync", sessionID: sessionID, status: "completed", items: 0, on: db)
     }
 
     // MARK: - Upsert Helpers
 
+    private func upsertCommittee(_ dto: CommitteeDTO, on db: Database) async throws {
+        // Derive council
+        var councilID: Int?
+        if let councilName = dto.CouncilName, !councilName.isEmpty {
+            if let existing = try await Council.query(on: db).filter(\.$name == councilName).first() {
+                councilID = existing.id
+            } else {
+                let council = Council(name: councilName, abbreviation: dto.CouncilAbbreviation)
+                try await council.create(on: db)
+                councilID = council.id
+            }
+        }
+
+        if let existing = try await Committee.find(dto.ID, on: db) {
+            existing.name = dto.CommitteeName ?? existing.name
+            existing.abbreviation = dto.Abbreviation1 ?? existing.abbreviation
+            existing.committeeType = dto.CommitteeTypeName ?? existing.committeeType
+            existing.$council.id = councilID
+            existing.$mainCommittee.id = dto.MainCommitteeNumber
+            existing.modified = dto.modifiedParsed ?? existing.modified
+            try await existing.update(on: db)
+        } else {
+            let committee = Committee(
+                id: dto.ID,
+                name: dto.CommitteeName ?? "Committee \(dto.ID)",
+                abbreviation: dto.Abbreviation1
+            )
+            committee.committeeType = dto.CommitteeTypeName
+            committee.$council.id = councilID
+            committee.$mainCommittee.id = dto.MainCommitteeNumber
+            committee.modified = dto.modifiedParsed
+            try await committee.create(on: db)
+        }
+    }
+
+
     private func upsertSession(_ dto: SessionDTO, on db: Database) async throws {
         if let existing = try await Session.find(dto.ID, on: db) {
-            existing.sessionName = dto.SessionName ?? existing.sessionName
-            existing.title = dto.Title ?? existing.title
+            existing.name = dto.SessionName ?? existing.name
             existing.abbreviation = dto.Abbreviation ?? existing.abbreviation
             existing.startDate = dto.startDateParsed ?? existing.startDate
             existing.endDate = dto.endDateParsed ?? existing.endDate
@@ -177,8 +293,7 @@ struct SyncService: Sendable {
         } else {
             let session = Session(
                 id: dto.ID,
-                title: dto.Title ?? "Session \(dto.ID)",
-                sessionName: dto.SessionName,
+                name: dto.SessionName ?? dto.Title ?? "Session \(dto.ID)",
                 abbreviation: dto.Abbreviation,
                 startDate: dto.startDateParsed,
                 endDate: dto.endDateParsed,
@@ -201,35 +316,83 @@ struct SyncService: Sendable {
             }
         }
 
+        // Derive SubmissionCouncil
+        var submissionCouncilID: Int?
+        if let councilName = dto.SubmissionCouncilName, !councilName.isEmpty {
+            if let existing = try await Council.query(on: db).filter(\.$name == councilName).first() {
+                submissionCouncilID = existing.id
+            } else {
+                let council = Council(name: councilName)
+                try await council.create(on: db)
+                submissionCouncilID = council.id
+            }
+        }
+
+        // Derive ResponsibleDepartment
+        var responsibleDepartmentID: Int?
+        if let deptName = dto.ResponsibleDepartmentName, !deptName.isEmpty {
+            if let existing = try await Department.query(on: db).filter(\.$name == deptName).first() {
+                responsibleDepartmentID = existing.id
+            } else {
+                let dept = Department(name: deptName, abbreviation: dto.ResponsibleDepartmentAbbreviation)
+                try await dept.create(on: db)
+                responsibleDepartmentID = dept.id
+            }
+        }
+
+        // Resolve SubmittedBy → MemberCouncil (format: "LastName FirstName")
+        var submittedByCouncilID: Int?
+        if let submittedBy = dto.SubmittedBy, !submittedBy.isEmpty {
+            let parts = submittedBy.split(separator: " ", maxSplits: 1)
+            if parts.count == 2 {
+                let lastName = String(parts[0])
+                let firstName = String(parts[1])
+                if let mc = try await MemberCouncil.query(on: db)
+                    .filter(\.$lastName == lastName)
+                    .filter(\.$firstName == firstName)
+                    .first() {
+                    submittedByCouncilID = mc.id
+                }
+            }
+        }
+
         if let existing = try await Business.find(dto.ID, on: db) {
-            existing.businessShortNumber = dto.BusinessShortNumber ?? existing.businessShortNumber
+            existing.number = dto.BusinessShortNumber ?? existing.number
             existing.title = dto.Title ?? existing.title
-            existing.businessStatusText = dto.BusinessStatusText ?? existing.businessStatusText
-            existing.businessStatusDate = dto.businessStatusDateParsed ?? existing.businessStatusDate
+            existing.status = dto.BusinessStatusText ?? existing.status
+            existing.statusDate = dto.businessStatusDateParsed ?? existing.statusDate
             existing.submissionDate = dto.submissionDateParsed ?? existing.submissionDate
             existing.submittedBy = dto.SubmittedBy ?? existing.submittedBy
             existing.description = dto.Description ?? existing.description
-            existing.submissionCouncilName = dto.SubmissionCouncilName ?? existing.submissionCouncilName
-            existing.responsibleDepartmentName = dto.ResponsibleDepartmentName ?? existing.responsibleDepartmentName
-            existing.responsibleDepartmentAbbreviation = dto.ResponsibleDepartmentAbbreviation ?? existing.responsibleDepartmentAbbreviation
+            existing.submittedText = dto.SubmittedText ?? existing.submittedText
+            existing.reasonText = dto.ReasonText ?? existing.reasonText
+            existing.federalCouncilResponse = dto.FederalCouncilResponseText ?? existing.federalCouncilResponse
+            existing.federalCouncilProposal = dto.FederalCouncilProposalText ?? existing.federalCouncilProposal
             existing.tagNames = dto.TagNames ?? existing.tagNames
             existing.modified = dto.modifiedParsed ?? existing.modified
             existing.$businessType.id = businessTypeID
+            existing.$submissionCouncil.id = submissionCouncilID
+            existing.$responsibleDepartment.id = responsibleDepartmentID
+            existing.$submittedByCouncil.id = submittedByCouncilID
             try await existing.update(on: db)
         } else {
             let business = Business(id: dto.ID, title: dto.Title ?? "Business \(dto.ID)", sessionID: sessionID)
-            business.businessShortNumber = dto.BusinessShortNumber
-            business.businessStatusText = dto.BusinessStatusText
-            business.businessStatusDate = dto.businessStatusDateParsed
+            business.number = dto.BusinessShortNumber
+            business.status = dto.BusinessStatusText
+            business.statusDate = dto.businessStatusDateParsed
             business.submissionDate = dto.submissionDateParsed
             business.submittedBy = dto.SubmittedBy
             business.description = dto.Description
-            business.submissionCouncilName = dto.SubmissionCouncilName
-            business.responsibleDepartmentName = dto.ResponsibleDepartmentName
-            business.responsibleDepartmentAbbreviation = dto.ResponsibleDepartmentAbbreviation
+            business.submittedText = dto.SubmittedText
+            business.reasonText = dto.ReasonText
+            business.federalCouncilResponse = dto.FederalCouncilResponseText
+            business.federalCouncilProposal = dto.FederalCouncilProposalText
             business.tagNames = dto.TagNames
             business.modified = dto.modifiedParsed
             business.$businessType.id = businessTypeID
+            business.$submissionCouncil.id = submissionCouncilID
+            business.$responsibleDepartment.id = responsibleDepartmentID
+            business.$submittedByCouncil.id = submittedByCouncilID
             try await business.create(on: db)
         }
     }
@@ -284,7 +447,6 @@ struct SyncService: Sendable {
         }
 
         if let existing = try await MemberCouncil.find(dto.ID, on: db) {
-            existing.personNumber = dto.PersonNumber ?? existing.personNumber
             existing.firstName = dto.FirstName ?? existing.firstName
             existing.lastName = dto.LastName ?? existing.lastName
             existing.officialName = dto.OfficialName ?? existing.officialName
@@ -313,7 +475,6 @@ struct SyncService: Sendable {
         } else {
             let member = MemberCouncil(
                 id: dto.ID,
-                personNumber: dto.PersonNumber ?? dto.ID,
                 firstName: dto.FirstName ?? "",
                 lastName: dto.LastName ?? "",
                 active: dto.Active ?? true
@@ -359,23 +520,19 @@ struct SyncService: Sendable {
         }
 
         if let existing = try await Meeting.find(meetingID, on: db) {
-            existing.meetingNumber = dto.MeetingNumber ?? existing.meetingNumber
             existing.$council.id = councilID
             existing.date = dto.dateParsed ?? existing.date
             existing.begin = dto.Begin ?? existing.begin
-            existing.meetingOrderText = dto.MeetingOrderText ?? existing.meetingOrderText
             existing.sortOrder = dto.SortOrder ?? existing.sortOrder
-            existing.sessionName = dto.SessionName ?? existing.sessionName
+            existing.sortOrderText = dto.MeetingOrderText ?? existing.sortOrderText
             try await existing.update(on: db)
         } else {
             let meeting = Meeting(id: meetingID, sessionID: sessionID)
-            meeting.meetingNumber = dto.MeetingNumber
             meeting.$council.id = councilID
             meeting.date = dto.dateParsed
             meeting.begin = dto.Begin
-            meeting.meetingOrderText = dto.MeetingOrderText
             meeting.sortOrder = dto.SortOrder
-            meeting.sessionName = dto.SessionName
+            meeting.sortOrderText = dto.MeetingOrderText
             try await meeting.create(on: db)
         }
     }
@@ -383,24 +540,20 @@ struct SyncService: Sendable {
     private func upsertSubject(_ dto: SubjectDTO, on db: Database) async throws {
         guard let subjectID = dto.idInt else { return }
         if try await Subject.find(subjectID, on: db) == nil {
-            let subject = Subject(id: subjectID, idMeeting: dto.idMeetingInt)
+            let subject = Subject(id: subjectID, meetingID: dto.idMeetingInt)
             subject.sortOrder = dto.SortOrder
-            subject.verbalixOid = dto.VerbalixOid
             try await subject.create(on: db)
         }
     }
 
     private func upsertSubjectBusiness(_ dto: SubjectBusinessDTO, on db: Database) async throws {
-        let idSubject = dto.IdSubject?.intValue
-        // Check for existing by idSubject + businessNumber
+        let subjectID = dto.IdSubject?.intValue
         let existing = try await SubjectBusiness.query(on: db)
-            .filter(\.$idSubject == idSubject)
-            .filter(\.$businessNumber == dto.BusinessNumber)
+            .filter(\.$subjectID == subjectID)
+            .filter(\.$businessID == dto.BusinessNumber)
             .first()
         if existing == nil {
-            let sb = SubjectBusiness(idSubject: idSubject, businessNumber: dto.BusinessNumber)
-            sb.businessShortNumber = dto.BusinessShortNumber
-            sb.title = dto.Title
+            let sb = SubjectBusiness(subjectID: subjectID, businessID: dto.BusinessNumber)
             sb.sortOrder = dto.SortOrder
             try await sb.create(on: db)
         }
@@ -408,34 +561,58 @@ struct SyncService: Sendable {
 
     private func upsertTranscript(_ dto: TranscriptDTO, idSubject: Int, on db: Database) async throws {
         guard let transcriptID = dto.idInt else { return }
+
+        // Resolve member_council_id (PersonNumber == member_council.id)
+        var memberCouncilID: Int?
+        if let personNumber = dto.PersonNumber {
+            if try await MemberCouncil.find(personNumber, on: db) != nil {
+                memberCouncilID = personNumber
+            }
+        }
+
+        // Resolve council_id from council_name
+        var councilID: Int?
+        if let councilName = dto.CouncilName, !councilName.isEmpty {
+            if let existing = try await Council.query(on: db).filter(\.$name == councilName).first() {
+                councilID = existing.id
+            } else {
+                let council = Council(name: councilName)
+                try await council.create(on: db)
+                councilID = council.id
+            }
+        }
+
         if let existing = try await Transcript.find(transcriptID, on: db) {
-            existing.personNumber = dto.PersonNumber ?? existing.personNumber
-            existing.speakerFullName = dto.SpeakerFullName ?? existing.speakerFullName
+            existing.$memberCouncil.id = memberCouncilID
             existing.text = dto.Text ?? existing.text
             try await existing.update(on: db)
         } else {
             let transcript = Transcript(id: transcriptID)
-            transcript.personNumber = dto.PersonNumber
-            transcript.speakerFullName = dto.SpeakerFullName
+            transcript.$memberCouncil.id = memberCouncilID
             transcript.speakerFunction = dto.SpeakerFunction
             transcript.text = dto.Text
             transcript.meetingDate = dto.meetingDateParsed
             transcript.startTime = dto.startParsed
             transcript.endTime = dto.endParsed
-            transcript.councilName = dto.CouncilName
-            transcript.parlGroupAbbreviation = dto.ParlGroupAbbreviation
-            transcript.cantonAbbreviation = dto.CantonAbbreviation
+            transcript.$council.id = councilID
             transcript.sortOrder = dto.SortOrder
             transcript.type = dto.TranscriptType
-            transcript.idSubject = idSubject
+            transcript.$subject.id = idSubject
             try await transcript.create(on: db)
         }
     }
 
     private func upsertVote(_ dto: VoteDTO, sessionID: Int, on db: Database) async throws {
+        // Resolve business_id from BusinessNumber
+        var businessID: Int?
+        if let bizNum = dto.BusinessNumber {
+            if try await Business.find(bizNum, on: db) != nil {
+                businessID = bizNum
+            }
+        }
+
         if let existing = try await Vote.find(dto.ID, on: db) {
-            existing.businessNumber = dto.BusinessNumber ?? existing.businessNumber
-            existing.businessShortNumber = dto.BusinessShortNumber ?? existing.businessShortNumber
+            existing.$business.id = businessID ?? existing.$business.id
             existing.billTitle = dto.BillTitle ?? existing.billTitle
             existing.subject = dto.Subject ?? existing.subject
             existing.meaningYes = dto.MeaningYes ?? existing.meaningYes
@@ -444,8 +621,7 @@ struct SyncService: Sendable {
             try await existing.update(on: db)
         } else {
             let vote = Vote(id: dto.ID, sessionID: sessionID)
-            vote.businessNumber = dto.BusinessNumber
-            vote.businessShortNumber = dto.BusinessShortNumber
+            vote.$business.id = businessID
             vote.billTitle = dto.BillTitle
             vote.subject = dto.Subject
             vote.meaningYes = dto.MeaningYes
@@ -458,15 +634,16 @@ struct SyncService: Sendable {
     private func upsertVoting(_ dto: VotingDTO, on db: Database) async throws {
         if try await Voting.find(dto.ID, on: db) == nil {
             guard let voteID = dto.IdVote, let personNumber = dto.PersonNumber, let decision = dto.Decision else { return }
-            let voting = Voting(id: dto.ID, voteID: voteID, personNumber: personNumber, decision: decision)
+            // PersonNumber == member_council.id
+            let mcID = try await MemberCouncil.find(personNumber, on: db) != nil ? personNumber : nil
+            let voting = Voting(id: dto.ID, voteID: voteID, memberCouncilID: mcID, decision: decision)
             voting.decisionText = dto.DecisionText
             try await voting.create(on: db)
         }
     }
 
-    private func insertPersonInterest(_ dto: PersonInterestDTO, on db: Database) async throws {
-        guard let personNumber = dto.PersonNumber else { return }
-        let interest = PersonInterest(personNumber: personNumber)
+    private func insertPersonInterest(_ dto: PersonInterestDTO, memberCouncilID: Int, on db: Database) async throws {
+        let interest = PersonInterest(memberCouncilID: memberCouncilID)
         interest.interestName = dto.InterestName
         interest.interestTypeText = dto.InterestTypeText
         interest.functionInAgencyText = dto.FunctionInAgencyText

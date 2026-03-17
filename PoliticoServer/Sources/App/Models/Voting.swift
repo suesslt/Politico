@@ -10,8 +10,8 @@ final class Voting: Model, Content, @unchecked Sendable {
     @Parent(key: "vote_id")
     var vote: Vote
 
-    @Field(key: "person_number")
-    var personNumber: Int
+    @OptionalParent(key: "member_council_id")
+    var memberCouncil: MemberCouncil?
 
     @Field(key: "decision")
     var decision: Int
@@ -21,10 +21,10 @@ final class Voting: Model, Content, @unchecked Sendable {
 
     init() {}
 
-    init(id: Int, voteID: Int, personNumber: Int, decision: Int) {
+    init(id: Int, voteID: Int, memberCouncilID: Int?, decision: Int) {
         self.id = id
         self.$vote.id = voteID
-        self.personNumber = personNumber
+        self.$memberCouncil.id = memberCouncilID
         self.decision = decision
     }
 }

@@ -7,17 +7,17 @@ final class Business: Model, Content, @unchecked Sendable {
     @ID(custom: "id", generatedBy: .user)
     var id: Int?
 
-    @Field(key: "business_short_number")
-    var businessShortNumber: String?
+    @Field(key: "number")
+    var number: String?
 
     @Field(key: "title")
     var title: String
 
-    @Field(key: "business_status_text")
-    var businessStatusText: String?
+    @Field(key: "status")
+    var status: String?
 
-    @Field(key: "business_status_date")
-    var businessStatusDate: Date?
+    @Field(key: "status_date")
+    var statusDate: Date?
 
     @Field(key: "submission_date")
     var submissionDate: Date?
@@ -28,14 +28,17 @@ final class Business: Model, Content, @unchecked Sendable {
     @Field(key: "description")
     var description: String?
 
-    @Field(key: "submission_council_name")
-    var submissionCouncilName: String?
+    @Field(key: "submitted_text")
+    var submittedText: String?
 
-    @Field(key: "responsible_department_name")
-    var responsibleDepartmentName: String?
+    @Field(key: "reason_text")
+    var reasonText: String?
 
-    @Field(key: "responsible_department_abbreviation")
-    var responsibleDepartmentAbbreviation: String?
+    @Field(key: "federal_council_response")
+    var federalCouncilResponse: String?
+
+    @Field(key: "federal_council_proposal")
+    var federalCouncilProposal: String?
 
     @Field(key: "tag_names")
     var tagNames: String?
@@ -48,6 +51,15 @@ final class Business: Model, Content, @unchecked Sendable {
 
     @OptionalParent(key: "business_type_id")
     var businessType: BusinessType?
+
+    @OptionalParent(key: "submission_council_id")
+    var submissionCouncil: Council?
+
+    @OptionalParent(key: "responsible_department_id")
+    var responsibleDepartment: Department?
+
+    @OptionalParent(key: "submitted_by_council_id")
+    var submittedByCouncil: MemberCouncil?
 
     init() {}
 

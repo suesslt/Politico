@@ -14,6 +14,10 @@ struct GeschaeftDTO: Decodable, Sendable {
     let SubmissionCouncilName: String?
     let ResponsibleDepartmentName: String?
     let ResponsibleDepartmentAbbreviation: String?
+    let SubmittedText: String?
+    let ReasonText: String?
+    let FederalCouncilResponseText: String?
+    let FederalCouncilProposalText: String?
     let TagNames: String?
     let Modified: String?
 

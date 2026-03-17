@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Politico</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        th.sortable { user-select: none; }
+        .sort-arrows { display: inline-flex; vertical-align: middle; margin-left: 4px; font-size: 10px; gap: 1px; }
+        .sort-arrows .arrow-up, .sort-arrows .arrow-down { color: #ccc; transition: color 0.15s; }
+        .sort-arrows .arrow-up.active { color: #212529; }
+        .sort-arrows .arrow-down.active { color: #212529; }
+        .accordion-chevron { transition: transform 0.2s; display: inline-block; color: #6c757d; transform: rotate(90deg); }
+        .collapsed > .accordion-chevron, .collapsed .accordion-chevron { transform: rotate(0deg); }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-dark bg-dark px-3">
@@ -28,6 +37,9 @@
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="meetings-tab" data-bs-toggle="tab" data-bs-target="#meetingsTab" type="button" role="tab">Sitzungen</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="committees-tab" data-bs-toggle="tab" data-bs-target="#committeesTab" type="button" role="tab">Kommissionen</button>
             </li>
         </ul>
 
@@ -57,8 +69,7 @@
                             #for(session in sessions):
                             <tr>
                                 <td>
-                                    <strong>#(session.sessionName)</strong><br>
-                                    <small class="text-muted">#(session.title)</small>
+                                    <strong>#(session.sessionName)</strong>
                                 </td>
                                 <td>#(session.abbreviation)</td>
                                 <td>#(session.startDate)</td>
@@ -92,25 +103,25 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="mb-0">Parlamentarier</h5>
                     <div style="width:320px">
-                        <input type="text" class="form-control form-control-sm search-input" data-table="memberTable" placeholder="Suche in Parlamentariern...">
+                        <input type="search" class="form-control form-control-sm live-search-input" data-table="memberTable" placeholder="Suche in Parlamentariern...">
                     </div>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-striped table-hover align-middle sortable-table" id="memberTable">
                         <thead class="table-light">
                             <tr>
-                                <th class="sortable" data-col="0" style="cursor:pointer">Name <span class="sort-icon"></span></th>
-                                <th class="sortable" data-col="1" style="cursor:pointer">Partei <span class="sort-icon"></span></th>
-                                <th class="sortable" data-col="2" style="cursor:pointer">Fraktion <span class="sort-icon"></span></th>
-                                <th class="sortable" data-col="3" style="cursor:pointer">Kanton <span class="sort-icon"></span></th>
-                                <th class="sortable" data-col="4" style="cursor:pointer">Rat <span class="sort-icon"></span></th>
+                                <th class="sortable" data-col="0" style="cursor:pointer">Name <span class="sort-arrows"><span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></span></th>
+                                <th class="sortable" data-col="1" style="cursor:pointer">Partei <span class="sort-arrows"><span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></span></th>
+                                <th class="sortable" data-col="2" style="cursor:pointer">Fraktion <span class="sort-arrows"><span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></span></th>
+                                <th class="sortable" data-col="3" style="cursor:pointer">Kanton <span class="sort-arrows"><span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></span></th>
+                                <th class="sortable" data-col="4" style="cursor:pointer">Rat <span class="sort-arrows"><span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></span></th>
                                 <th>Beruf</th>
                             </tr>
                         </thead>
                         <tbody>
                             #for(member in members):
                             <tr>
-                                <td><strong>#(member.lastName)</strong>, #(member.firstName)</td>
+                                <td><a href="/members/#(member.id)?from=parlamentarier" class="text-decoration-none text-dark"><strong>#(member.lastName)</strong>, #(member.firstName)</a></td>
                                 <td><span class="badge" style="background-color:#(member.partyColor);color:#fff">#(member.party)</span></td>
                                 <td>#(member.faction)</td>
                                 <td>#(member.canton)</td>
@@ -128,30 +139,33 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="mb-0">Geschäfte</h5>
                     <div style="width:320px">
-                        <input type="text" class="form-control form-control-sm search-input" data-table="businessTable" placeholder="Suche in Geschäften...">
+                        <input type="search" class="form-control form-control-sm search-input" data-table="businessTable" placeholder="Suche in Geschäften...">
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover align-middle sortable-table" id="businessTable">
+                    <table class="table table-striped table-hover align-middle sortable-table paged-table" data-page-size="25" id="businessTable">
                         <thead class="table-light">
                             <tr>
-                                <th class="sortable" data-col="0" style="cursor:pointer">Nr. <span class="sort-icon"></span></th>
-                                <th class="sortable" data-col="1" style="cursor:pointer">Titel <span class="sort-icon"></span></th>
-                                <th class="sortable" data-col="2" style="cursor:pointer">Typ <span class="sort-icon"></span></th>
-                                <th class="sortable" data-col="3" style="cursor:pointer">Status <span class="sort-icon"></span></th>
+                                <th class="sortable" data-col="0" style="cursor:pointer">Nr. <span class="sort-arrows"><span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></span></th>
+                                <th class="sortable" data-col="1" style="cursor:pointer">Titel <span class="sort-arrows"><span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></span></th>
+                                <th class="sortable" data-col="2" style="cursor:pointer">Typ <span class="sort-arrows"><span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></span></th>
+                                <th class="sortable" data-col="3" style="cursor:pointer">Eingereicht von <span class="sort-arrows"><span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></span></th>
+                                <th class="sortable" data-col="4" style="cursor:pointer">Status <span class="sort-arrows"><span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></span></th>
                             </tr>
                         </thead>
                         <tbody>
                             #for(business in businesses):
                             <tr>
                                 <td><code>#(business.shortNumber)</code></td>
-                                <td>#(business.title)</td>
+                                <td><a href="/businesses/#(business.id)?from=geschaefte" class="text-decoration-none text-dark">#(business.title)</a></td>
                                 <td><span class="badge bg-info text-dark">#(business.typeName)</span></td>
+                                <td>#if(business.submittedByID):<a href="/members/#(business.submittedByID)?from=geschaefte" class="text-decoration-none"><span class="badge" style="background-color:#(business.submittedByPartyColor);color:#fff">&#9679;</span> #(business.submittedByName)</a>#else:#(business.submittedBy)#endif</td>
                                 <td>#(business.statusText)</td>
                             </tr>
                             #endfor
                         </tbody>
                     </table>
+                    <nav class="pager" data-table="businessTable"></nav>
                 </div>
             </div>
 
@@ -160,79 +174,147 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="mb-0">Wortmeldungen</h5>
                     <div style="width:320px">
-                        <input type="text" class="form-control form-control-sm search-input" data-table="transcriptTable" placeholder="Suche in Wortmeldungen...">
+                        <input type="search" class="form-control form-control-sm search-input" data-table="transcriptTable" data-search-attr="true" placeholder="Suche im Text der Wortmeldungen...">
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover align-middle sortable-table" id="transcriptTable">
+                    <table class="table table-striped table-hover align-middle sortable-table paged-table" data-page-size="25" id="transcriptTable">
                         <thead class="table-light">
                             <tr>
-                                <th class="sortable" data-col="0" style="cursor:pointer">Datum <span class="sort-icon"></span></th>
-                                <th class="sortable" data-col="1" style="cursor:pointer">Redner/in <span class="sort-icon"></span></th>
-                                <th class="sortable" data-col="2" style="cursor:pointer">Funktion <span class="sort-icon"></span></th>
-                                <th class="sortable" data-col="3" style="cursor:pointer">Fraktion <span class="sort-icon"></span></th>
-                                <th class="sortable" data-col="4" style="cursor:pointer">Kanton <span class="sort-icon"></span></th>
-                                <th>Text</th>
+                                <th class="sortable" data-col="0" style="cursor:pointer">Datum <span class="sort-arrows"><span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></span></th>
+                                <th class="sortable" data-col="1" style="cursor:pointer">Redner/in <span class="sort-arrows"><span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></span></th>
+                                <th class="sortable" data-col="2" style="cursor:pointer">Partei <span class="sort-arrows"><span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></span></th>
+                                <th class="sortable" data-col="3" style="cursor:pointer">Geschäft <span class="sort-arrows"><span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></span></th>
                             </tr>
                         </thead>
                         <tbody>
                             #for(transcript in transcripts):
-                            <tr>
+                            <tr data-search="#(transcript.searchText)">
                                 <td class="text-nowrap">#(transcript.meetingDate)</td>
-                                <td><strong>#(transcript.speakerFullName)</strong></td>
-                                <td><small>#(transcript.speakerFunction)</small></td>
-                                <td>#(transcript.faction)</td>
-                                <td>#(transcript.canton)</td>
-                                <td><small class="text-muted">#(transcript.textPreview)</small></td>
+                                <td>#if(transcript.speakerID):<a href="/members/#(transcript.speakerID)?from=wortmeldungen" class="text-decoration-none text-dark"><strong>#(transcript.speakerFullName)</strong></a>#else:<strong>#(transcript.speakerFullName)</strong>#endif</td>
+                                <td><span class="badge" style="background-color:#(transcript.partyColor);color:#fff">#(transcript.partyAbbreviation)</span></td>
+                                <td>#if(transcript.businessShortNumber != ""):<code class="text-muted me-1">#(transcript.businessShortNumber)</code>#endif<small>#(transcript.businessTitle)</small></td>
                             </tr>
                             #endfor
                         </tbody>
                     </table>
+                    <nav class="pager" data-table="transcriptTable"></nav>
                 </div>
             </div>
 
             <!-- Tab 5: Sitzungen -->
             <div class="tab-pane fade" id="meetingsTab" role="tabpanel">
                 <h5 class="mb-3">Sitzungen</h5>
-                #for(sessionGroup in meetingGroups):
-                <div class="card mb-3">
-                    <div class="card-header bg-dark text-white">
-                        <strong>#(sessionGroup.sessionName)</strong>
-                        <small class="float-end">#(sessionGroup.sessionDates)</small>
-                    </div>
-                    <div class="card-body p-0">
-                        #for(council in sessionGroup.councils):
-                        <div class="border-bottom">
-                            <div class="px-3 py-2 bg-light border-bottom">
-                                <strong>#(council.councilName)</strong>
-                                <span class="badge bg-secondary">#(council.councilAbbreviation)</span>
-                            </div>
-                            #for(dateGroup in council.dates):
-                            <div class="border-bottom">
-                                <button class="btn btn-link text-decoration-none w-100 text-start px-3 py-2 d-flex justify-content-between align-items-center collapsed" type="button" data-bs-toggle="collapse" data-bs-target="##(dateGroup.id)">
-                                    <span class="fw-semibold text-primary">#(dateGroup.date)</span>
-                                    <span class="badge bg-secondary">#(dateGroup.businessCount) Geschäfte</span>
-                                </button>
-                                <div class="collapse" id="#(dateGroup.id)">
-                                    <div class="px-3 pb-2">
-                                        #if(count(dateGroup.businesses) > 0):
-                                        <ul class="list-group list-group-flush ms-2">
-                                            #for(title in dateGroup.businesses):
-                                            <li class="list-group-item px-0 py-1 border-0"><small>#(title)</small></li>
-                                            #endfor
-                                        </ul>
-                                        #else:
-                                        <small class="text-muted ms-2">Keine Geschäfte verknüpft</small>
-                                        #endif
+                <div class="accordion" id="meetingsAccordion">
+                    #for(sessionGroup in meetingGroups):
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="btn w-100 text-start d-flex justify-content-between align-items-center px-3 py-2 bg-dark text-white collapsed" type="button" data-bs-toggle="collapse" data-bs-target="##(sessionGroup.id)">
+                                <span><strong>#(sessionGroup.sessionName)</strong> <small class="ms-2 opacity-75">#(sessionGroup.sessionDates)</small></span>
+                                <span class="accordion-chevron">&#9654;</span>
+                            </button>
+                        </h2>
+                        <div id="#(sessionGroup.id)" class="collapse" data-bs-parent="#meetingsAccordion">
+                            <div class="accordion-body p-0">
+                                #for(council in sessionGroup.councils):
+                                <div class="border-bottom">
+                                    <button class="btn w-100 text-start d-flex justify-content-between align-items-center px-3 py-2 bg-light collapsed" type="button" data-bs-toggle="collapse" data-bs-target="##(council.id)">
+                                        <span><strong>#(council.councilName)</strong> <span class="badge bg-secondary ms-1">#(council.councilAbbreviation)</span></span>
+                                        <span class="accordion-chevron">&#9654;</span>
+                                    </button>
+                                    <div id="#(council.id)" class="collapse">
+                                        #for(dateGroup in council.dates):
+                                        <div class="border-top">
+                                            <button class="btn btn-link text-decoration-none w-100 text-start d-flex justify-content-between align-items-center px-4 py-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="##(dateGroup.id)">
+                                                <span class="fw-semibold text-primary">#(dateGroup.date)</span>
+                                                <span><span class="badge bg-secondary me-2">#(dateGroup.businessCount) Geschäfte</span><span class="accordion-chevron">&#9654;</span></span>
+                                            </button>
+                                            <div class="collapse" id="#(dateGroup.id)">
+                                                <div class="px-4 pb-2">
+                                                    #if(count(dateGroup.businesses) > 0):
+                                                    <table class="table table-sm table-borderless mb-0 ms-2">
+                                                        #for(biz in dateGroup.businesses):
+                                                        <tr>
+                                                            <td style="width:100px"><code class="text-muted">#(biz.shortNumber)</code></td>
+                                                            <td><small>#(biz.title)</small></td>
+                                                            <td style="width:150px">#if(biz.typeName != ""):<span class="badge bg-info text-dark" style="font-weight:normal">#(biz.typeName)</span>#endif</td>
+                                                        </tr>
+                                                        #endfor
+                                                    </table>
+                                                    #else:
+                                                    <small class="text-muted ms-2">Keine Geschäfte verknüpft</small>
+                                                    #endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                        #endfor
                                     </div>
                                 </div>
+                                #endfor
                             </div>
-                            #endfor
                         </div>
-                        #endfor
                     </div>
+                    #endfor
                 </div>
-                #endfor
+            </div>
+
+            <!-- Tab 6: Kommissionen -->
+            <div class="tab-pane fade" id="committeesTab" role="tabpanel">
+                <h5 class="mb-3">Kommissionen</h5>
+                <div class="accordion" id="committeesAccordion">
+                    #for(committee in committees):
+                    #if(committee.memberCount > 0):
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="btn w-100 text-start d-flex justify-content-between align-items-center px-3 py-2 border-bottom collapsed" type="button" data-bs-toggle="collapse" data-bs-target="##(committee.id)">
+                                <span>
+                                    <strong>#(committee.name)</strong>
+                                    #if(committee.abbreviation != ""):<code class="ms-2">#(committee.abbreviation)</code>#endif
+                                    #if(committee.council != ""):<span class="badge bg-secondary ms-1">#(committee.council)</span>#endif
+                                    <small class="text-muted ms-2">#(committee.committeeType)</small>
+                                </span>
+                                <span>
+                                    <span class="badge bg-primary me-2">#(committee.memberCount)</span>
+                                    <span class="accordion-chevron">&#9654;</span>
+                                </span>
+                            </button>
+                        </h2>
+                        <div id="#(committee.id)" class="collapse">
+                            <div class="p-0">
+                                <table class="table table-sm table-striped table-hover mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Partei</th>
+                                            <th>Kanton</th>
+                                            <th>Funktion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        #for(m in committee.members):
+                                        <tr>
+                                            <td><a href="/members/#(m.id)?from=kommissionen" class="text-decoration-none text-dark"><strong>#(m.lastName)</strong>, #(m.firstName)</a></td>
+                                            <td><span class="badge" style="background-color:#(m.partyColor);color:#fff">#(m.party)</span></td>
+                                            <td>#(m.canton)</td>
+                                            <td>
+                                                #if(m.function == "Präsident/in"):
+                                                <span class="badge bg-primary">#(m.function)</span>
+                                                #elseif(m.function == "Vizepräsident/in"):
+                                                <span class="badge bg-info text-dark">#(m.function)</span>
+                                                #else:
+                                                <span class="badge bg-secondary">#(m.function)</span>
+                                                #endif
+                                            </td>
+                                        </tr>
+                                        #endfor
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    #endif
+                    #endfor
+                </div>
             </div>
 
         </div>
@@ -241,34 +323,149 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Search: bind each .search-input to its data-table
-        document.querySelectorAll('.search-input').forEach(function(input) {
+
+        // Restore active tab from sessionStorage or URL hash
+        var activeTab = sessionStorage.getItem('activeTab') || window.location.hash;
+        if (activeTab) {
+            sessionStorage.removeItem('activeTab');
+            var tabBtn = document.querySelector('[data-bs-target="' + activeTab + '"]');
+            if (tabBtn) { new bootstrap.Tab(tabBtn).show(); }
+        }
+
+        // ---- Paging ----
+        function setupPaging(tableId) {
+            var table = document.getElementById(tableId);
+            if (!table || !table.classList.contains('paged-table')) return null;
+            var pageSize = parseInt(table.dataset.pageSize) || 25;
+            var pagerNav = document.querySelector('.pager[data-table="' + tableId + '"]');
+            var currentPage = 1;
+
+            function getVisibleRows() {
+                return Array.from(table.querySelectorAll('tbody tr')).filter(function(r) {
+                    return r.dataset.filtered !== 'true';
+                });
+            }
+
+            function render() {
+                // Hide all filtered rows first
+                table.querySelectorAll('tbody tr').forEach(function(r) {
+                    if (r.dataset.filtered === 'true') r.style.display = 'none';
+                });
+                var rows = getVisibleRows();
+                var totalPages = Math.max(1, Math.ceil(rows.length / pageSize));
+                if (currentPage > totalPages) currentPage = totalPages;
+
+                rows.forEach(function(r, i) {
+                    r.style.display = (i >= (currentPage - 1) * pageSize && i < currentPage * pageSize) ? '' : 'none';
+                });
+
+                // Build pagination
+                var html = '<ul class="pagination pagination-sm justify-content-center mt-2 mb-0">';
+                html += '<li class="page-item' + (currentPage === 1 ? ' disabled' : '') + '"><a class="page-link" href="#" data-p="' + (currentPage - 1) + '">&laquo;</a></li>';
+
+                var startPage = Math.max(1, currentPage - 2);
+                var endPage = Math.min(totalPages, startPage + 4);
+                if (endPage - startPage < 4) startPage = Math.max(1, endPage - 4);
+
+                for (var p = startPage; p <= endPage; p++) {
+                    html += '<li class="page-item' + (p === currentPage ? ' active' : '') + '"><a class="page-link" href="#" data-p="' + p + '">' + p + '</a></li>';
+                }
+                html += '<li class="page-item' + (currentPage === totalPages ? ' disabled' : '') + '"><a class="page-link" href="#" data-p="' + (currentPage + 1) + '">&raquo;</a></li>';
+                html += '</ul>';
+                html += '<div class="text-center text-muted small mt-1">' + rows.length + ' Einträge, Seite ' + currentPage + ' von ' + totalPages + '</div>';
+                pagerNav.innerHTML = html;
+
+                pagerNav.querySelectorAll('a[data-p]').forEach(function(a) {
+                    a.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        var p = parseInt(this.dataset.p);
+                        if (p >= 1 && p <= totalPages) { currentPage = p; render(); }
+                    });
+                });
+            }
+
+            return { render: render, resetPage: function() { currentPage = 1; } };
+        }
+
+        var pagers = {};
+        document.querySelectorAll('.paged-table').forEach(function(table) {
+            var p = setupPaging(table.id);
+            if (p) { pagers[table.id] = p; p.render(); }
+        });
+
+        // ---- Live search (no paging, filters on each keystroke) ----
+        document.querySelectorAll('.live-search-input').forEach(function(input) {
             var tbody = document.getElementById(input.dataset.table).querySelector('tbody');
             input.addEventListener('input', function() {
                 var term = this.value.toLowerCase();
                 tbody.querySelectorAll('tr').forEach(function(row) {
-                    row.style.display = row.textContent.toLowerCase().includes(term) ? '' : 'none';
+                    row.style.display = !term || row.textContent.toLowerCase().includes(term) ? '' : 'none';
                 });
             });
         });
 
-        // Sort: bind each .sortable-table
+        // ---- Search (triggers on Enter, searches full table) ----
+        document.querySelectorAll('.search-input').forEach(function(input) {
+            var tableId = input.dataset.table;
+            var tbody = document.getElementById(tableId).querySelector('tbody');
+
+            var useSearchAttr = input.dataset.searchAttr === 'true';
+
+            function doSearch() {
+                var term = input.value.toLowerCase();
+                tbody.querySelectorAll('tr').forEach(function(row) {
+                    var haystack = useSearchAttr ? (row.dataset.search || '').toLowerCase() : row.textContent.toLowerCase();
+                    var match = !term || haystack.includes(term);
+                    row.dataset.filtered = match ? 'false' : 'true';
+                });
+                if (pagers[tableId]) { pagers[tableId].resetPage(); pagers[tableId].render(); }
+            }
+
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') { e.preventDefault(); doSearch(); }
+            });
+            // Also trigger when field is cleared
+            input.addEventListener('search', doSearch);
+        });
+
+        // ---- Sort (3 states: neutral → asc → desc → neutral) ----
         document.querySelectorAll('.sortable-table').forEach(function(table) {
-            var state = { col: -1, asc: true };
+            var state = { col: -1, dir: 0 };
             var tbody = table.querySelector('tbody');
+            var originalRows = Array.from(tbody.querySelectorAll('tr'));
+
+            function resetArrows(tbl) {
+                tbl.querySelectorAll('.arrow-up, .arrow-down').forEach(function(a) { a.classList.remove('active'); });
+            }
+
             table.querySelectorAll('th.sortable').forEach(function(th) {
                 th.addEventListener('click', function() {
                     var col = parseInt(this.dataset.col);
-                    if (state.col === col) { state.asc = !state.asc; } else { state.col = col; state.asc = true; }
-                    var rows = Array.from(tbody.querySelectorAll('tr'));
-                    rows.sort(function(a, b) {
-                        var aT = a.cells[col].textContent.trim().toLowerCase();
-                        var bT = b.cells[col].textContent.trim().toLowerCase();
-                        return aT < bT ? (state.asc ? -1 : 1) : aT > bT ? (state.asc ? 1 : -1) : 0;
-                    });
-                    rows.forEach(function(r) { tbody.appendChild(r); });
-                    table.querySelectorAll('.sort-icon').forEach(function(i) { i.textContent = ''; });
-                    this.querySelector('.sort-icon').textContent = state.asc ? ' ▲' : ' ▼';
+                    if (state.col === col) {
+                        state.dir = (state.dir + 1) % 3;
+                    } else {
+                        state.col = col;
+                        state.dir = 1;
+                    }
+
+                    resetArrows(table);
+
+                    if (state.dir === 0) {
+                        originalRows.forEach(function(r) { tbody.appendChild(r); });
+                        state.col = -1;
+                    } else {
+                        var asc = state.dir === 1;
+                        var rows = Array.from(tbody.querySelectorAll('tr'));
+                        rows.sort(function(a, b) {
+                            var aT = a.cells[col].textContent.trim().toLowerCase();
+                            var bT = b.cells[col].textContent.trim().toLowerCase();
+                            return aT < bT ? (asc ? -1 : 1) : aT > bT ? (asc ? 1 : -1) : 0;
+                        });
+                        rows.forEach(function(r) { tbody.appendChild(r); });
+                        this.querySelector(asc ? '.arrow-up' : '.arrow-down').classList.add('active');
+                    }
+                    // Re-render paging after sort
+                    if (pagers[table.id]) { pagers[table.id].resetPage(); pagers[table.id].render(); }
                 });
             });
         });

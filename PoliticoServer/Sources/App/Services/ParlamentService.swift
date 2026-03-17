@@ -21,13 +21,13 @@ struct ParlamentService: Sendable {
     // MARK: - Fetch Businesses for a Session
 
     func fetchBusinesses(sessionID: Int) async throws -> [GeschaeftDTO] {
-        let urlString = "\(baseURL)/Session(ID=\(sessionID),Language='DE')/Businesses?$format=json&$select=ID,BusinessShortNumber,Title,BusinessTypeName,BusinessTypeAbbreviation,BusinessStatusText,BusinessStatusDate,SubmissionDate,SubmittedBy,Description,SubmissionCouncilName,ResponsibleDepartmentName,ResponsibleDepartmentAbbreviation,TagNames,Modified"
+        let urlString = "\(baseURL)/Session(ID=\(sessionID),Language='DE')/Businesses?$format=json&$select=ID,BusinessShortNumber,Title,BusinessTypeName,BusinessTypeAbbreviation,BusinessStatusText,BusinessStatusDate,SubmissionDate,SubmittedBy,Description,SubmittedText,ReasonText,FederalCouncilResponseText,FederalCouncilProposalText,SubmissionCouncilName,ResponsibleDepartmentName,ResponsibleDepartmentAbbreviation,TagNames,Modified"
         return try await fetchAllPages(from: urlString)
     }
 
     func fetchBusinessesModifiedSince(sessionID: Int, since: Date) async throws -> [GeschaeftDTO] {
         let dateString = ODataDateFormatter.format(since)
-        let urlString = "\(baseURL)/Session(ID=\(sessionID),Language='DE')/Businesses?$format=json&$filter=Modified%20gt%20datetime'\(dateString)'&$select=ID,BusinessShortNumber,Title,BusinessTypeName,BusinessTypeAbbreviation,BusinessStatusText,BusinessStatusDate,SubmissionDate,SubmittedBy,Description,SubmissionCouncilName,ResponsibleDepartmentName,ResponsibleDepartmentAbbreviation,TagNames,Modified"
+        let urlString = "\(baseURL)/Session(ID=\(sessionID),Language='DE')/Businesses?$format=json&$filter=Modified%20gt%20datetime'\(dateString)'&$select=ID,BusinessShortNumber,Title,BusinessTypeName,BusinessTypeAbbreviation,BusinessStatusText,BusinessStatusDate,SubmissionDate,SubmittedBy,Description,SubmittedText,ReasonText,FederalCouncilResponseText,FederalCouncilProposalText,SubmissionCouncilName,ResponsibleDepartmentName,ResponsibleDepartmentAbbreviation,TagNames,Modified"
         return try await fetchAllPages(from: urlString)
     }
 
@@ -36,6 +36,15 @@ struct ParlamentService: Sendable {
     func fetchAllMemberCouncils() async throws -> [ParlamentarierDTO] {
         let urlString = "\(baseURL)/MemberCouncil?$filter=Language%20eq%20'DE'%20and%20Active%20eq%20true&$format=json&$select=ID,PersonNumber,FirstName,LastName,OfficialName,GenderAsString,Active,PartyAbbreviation,PartyName,ParlGroupAbbreviation,ParlGroupName,CantonAbbreviation,CantonName,CouncilName,CouncilAbbreviation,DateOfBirth,DateJoining,DateLeaving,DateElection,MaritalStatusText,NumberOfChildren,BirthPlace_City,BirthPlace_Canton,Citizenship,MilitaryRankText,Nationality,Mandates,AdditionalMandate,AdditionalActivity,Modified&$orderby=LastName,FirstName"
         return try await fetchAllPages(from: urlString)
+    }
+
+    // MARK: - Fetch Single Business
+
+    func fetchBusiness(id: Int) async throws -> GeschaeftDTO? {
+        let urlString = "\(baseURL)/Business(ID=\(id),Language='DE')?$format=json&$select=ID,BusinessShortNumber,Title,BusinessTypeName,BusinessTypeAbbreviation,BusinessStatusText,BusinessStatusDate,SubmissionDate,SubmittedBy,Description,SubmittedText,ReasonText,FederalCouncilResponseText,FederalCouncilProposalText,SubmissionCouncilName,ResponsibleDepartmentName,ResponsibleDepartmentAbbreviation,TagNames,Modified"
+        let data = try await fetchData(from: urlString)
+        let response = try JSONDecoder().decode(ODataSingleResponse<GeschaeftDTO>.self, from: data)
+        return response.d
     }
 
     // MARK: - Fetch Meetings
@@ -48,7 +57,7 @@ struct ParlamentService: Sendable {
     // MARK: - Fetch Subjects
 
     func fetchSubjectsForMeeting(meetingID: String) async throws -> [SubjectDTO] {
-        let urlString = "\(baseURL)/Meeting(ID=\(meetingID)L,Language='DE')/Subjects?$format=json&$select=ID,IdMeeting,SortOrder,VerbalixOid&$orderby=SortOrder"
+        let urlString = "\(baseURL)/Meeting(ID=\(meetingID)L,Language='DE')/Subjects?$format=json&$select=ID,IdMeeting,SortOrder&$orderby=SortOrder"
         return try await fetchAllPages(from: urlString)
     }
 
@@ -85,6 +94,18 @@ struct ParlamentService: Sendable {
 
     func fetchPersonOccupations(personNumber: Int) async throws -> [PersonOccupationDTO] {
         let urlString = "\(baseURL)/PersonOccupation?$filter=Language%20eq%20'DE'%20and%20PersonNumber%20eq%20\(personNumber)&$format=json&$select=PersonNumber,OccupationName,Employer,JobTitle"
+        return try await fetchAllPages(from: urlString)
+    }
+
+    // MARK: - Fetch Committees
+
+    func fetchCommittees() async throws -> [CommitteeDTO] {
+        let urlString = "\(baseURL)/Committee?$filter=Language%20eq%20'DE'&$format=json&$select=ID,CommitteeName,Abbreviation1,CommitteeTypeName,CouncilName,CouncilAbbreviation,MainCommitteeNumber,Modified"
+        return try await fetchAllPages(from: urlString)
+    }
+
+    func fetchMemberCommittees(committeeNumber: Int) async throws -> [MemberCommitteeDTO] {
+        let urlString = "\(baseURL)/MemberCommittee?$filter=Language%20eq%20'DE'%20and%20CommitteeNumber%20eq%20\(committeeNumber)&$format=json&$select=ID,CommitteeNumber,PersonNumber,CommitteeFunctionName,Modified"
         return try await fetchAllPages(from: urlString)
     }
 

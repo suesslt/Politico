@@ -7,11 +7,8 @@ final class Vote: Model, Content, @unchecked Sendable {
     @ID(custom: "id", generatedBy: .user)
     var id: Int?
 
-    @Field(key: "business_number")
-    var businessNumber: Int?
-
-    @Field(key: "business_short_number")
-    var businessShortNumber: String?
+    @OptionalParent(key: "business_id")
+    var business: Business?
 
     @Field(key: "bill_title")
     var billTitle: String?

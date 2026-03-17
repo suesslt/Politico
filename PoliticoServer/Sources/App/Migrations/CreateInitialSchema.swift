@@ -123,18 +123,15 @@ struct CreateInitialSchema: AsyncMigration {
         // Subjects
         try await database.schema("subjects")
             .field("id", .int, .identifier(auto: false))
-            .field("id_meeting", .int)
+            .field("meeting_id", .int)
             .field("sort_order", .int)
-            .field("verbalix_oid", .int)
             .create()
 
         // SubjectBusinesses
         try await database.schema("subject_businesses")
             .field("id", .int, .identifier(auto: true))
-            .field("id_subject", .int)
-            .field("business_number", .int)
-            .field("business_short_number", .string)
-            .field("title", .string)
+            .field("subject_id", .int)
+            .field("business_id", .int)
             .field("sort_order", .int)
             .create()
 

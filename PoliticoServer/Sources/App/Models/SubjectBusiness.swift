@@ -7,25 +7,19 @@ final class SubjectBusiness: Model, Content, @unchecked Sendable {
     @ID(custom: .id, generatedBy: .database)
     var id: Int?
 
-    @Field(key: "id_subject")
-    var idSubject: Int?
+    @Field(key: "subject_id")
+    var subjectID: Int?
 
-    @Field(key: "business_number")
-    var businessNumber: Int?
-
-    @Field(key: "business_short_number")
-    var businessShortNumber: String?
-
-    @Field(key: "title")
-    var title: String?
+    @Field(key: "business_id")
+    var businessID: Int?
 
     @Field(key: "sort_order")
     var sortOrder: Int?
 
     init() {}
 
-    init(idSubject: Int?, businessNumber: Int?) {
-        self.idSubject = idSubject
-        self.businessNumber = businessNumber
+    init(subjectID: Int?, businessID: Int?) {
+        self.subjectID = subjectID
+        self.businessID = businessID
     }
 }

@@ -7,19 +7,16 @@ final class Subject: Model, Content, @unchecked Sendable {
     @ID(custom: "id", generatedBy: .user)
     var id: Int?
 
-    @Field(key: "id_meeting")
-    var idMeeting: Int?
+    @OptionalParent(key: "meeting_id")
+    var meeting: Meeting?
 
     @Field(key: "sort_order")
     var sortOrder: Int?
 
-    @Field(key: "verbalix_oid")
-    var verbalixOid: Int?
-
     init() {}
 
-    init(id: Int, idMeeting: Int?) {
+    init(id: Int, meetingID: Int?) {
         self.id = id
-        self.idMeeting = idMeeting
+        self.$meeting.id = meetingID
     }
 }

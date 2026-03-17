@@ -27,8 +27,7 @@ struct SessionController: RouteCollection {
         let sessionContexts = sessions.map { session in
             SessionContext(
                 id: session.id ?? 0,
-                sessionName: session.sessionName ?? session.title,
-                title: session.title,
+                sessionName: session.name,
                 abbreviation: session.abbreviation ?? "",
                 startDate: session.startDate.map { formatDate($0) } ?? "",
                 endDate: session.endDate.map { formatDate($0) } ?? "",
@@ -64,37 +63,71 @@ struct SessionController: RouteCollection {
         // Businesses
         let businesses = try await Business.query(on: req.db)
             .with(\.$businessType)
+            .with(\.$submittedByCouncil) { mc in mc.with(\.$party) }
             .sort(\.$submissionDate, .descending)
-            .range(..<200)
             .all()
 
         let businessContexts = businesses.map { b in
-            BusinessContext(
+            let sbc = b.submittedByCouncil
+            return BusinessContext(
                 id: b.id ?? 0,
-                shortNumber: b.businessShortNumber ?? "",
+                shortNumber: b.number ?? "",
                 title: b.title,
                 typeName: b.businessType?.name ?? "",
-                statusText: b.businessStatusText ?? ""
+                statusText: b.status ?? "",
+                submittedBy: b.submittedBy ?? "",
+                submittedByID: sbc?.id,
+                submittedByName: sbc.map { "\($0.firstName) \($0.lastName)" },
+                submittedByPartyColor: sbc?.party?.color
             )
         }
 
         // Transcripts
+        // Transcripts with eager-loaded relationships
         let transcripts = try await Transcript.query(on: req.db)
+            .with(\.$memberCouncil) { mc in
+                mc.with(\.$party)
+            }
             .sort(\.$meetingDate, .descending)
             .sort(\.$sortOrder)
-            .range(..<500)
             .all()
 
+        // Lookup: subjectID → Business
+        let transcriptSubjectIDs = Set(transcripts.compactMap { $0.$subject.id })
+        let transcriptSBs = transcriptSubjectIDs.isEmpty ? [SubjectBusiness]() :
+            try await SubjectBusiness.query(on: req.db)
+                .filter(\.$subjectID ~~ transcriptSubjectIDs)
+                .all()
+        let transcriptBizIDs = Set(transcriptSBs.compactMap { $0.businessID })
+        let transcriptBusinesses = transcriptBizIDs.isEmpty ? [Business]() :
+            try await Business.query(on: req.db)
+                .filter(\.$id ~~ transcriptBizIDs)
+                .all()
+        let bizByID = Dictionary(uniqueKeysWithValues: transcriptBusinesses.compactMap { b -> (Int, Business)? in
+            guard let id = b.id else { return nil }
+            return (id, b)
+        })
+        var subjectToBusiness: [Int: Business] = [:]
+        for sb in transcriptSBs {
+            guard let sid = sb.subjectID, subjectToBusiness[sid] == nil,
+                  let bizID = sb.businessID, let biz = bizByID[bizID] else { continue }
+            subjectToBusiness[sid] = biz
+        }
+
         let transcriptContexts = transcripts.map { t in
-            TranscriptContext(
+            let mc = t.memberCouncil
+            let party = mc?.party
+            let biz = t.$subject.id.flatMap { subjectToBusiness[$0] }
+            return TranscriptContext(
                 id: t.id ?? 0,
-                speakerFullName: t.speakerFullName ?? "-",
-                speakerFunction: t.speakerFunction ?? "",
+                speakerID: mc?.id,
                 meetingDate: t.meetingDate.map { formatDate($0) } ?? "",
-                councilName: t.councilName ?? "",
-                faction: t.parlGroupAbbreviation ?? "",
-                canton: t.cantonAbbreviation ?? "",
-                textPreview: String((t.text ?? "").prefix(200)).replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression)
+                speakerFullName: mc.map { "\($0.firstName) \($0.lastName)" } ?? "-",
+                partyAbbreviation: party?.abbreviation ?? "-",
+                partyColor: party?.color ?? "#6c757d",
+                businessShortNumber: biz?.number ?? "",
+                businessTitle: biz?.title ?? "",
+                searchText: (t.text ?? "").replacingOccurrences(of: "<[^>]+>", with: " ", options: .regularExpression).replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression).trimmingCharacters(in: .whitespaces)
             )
         }
 
@@ -117,25 +150,137 @@ struct SessionController: RouteCollection {
             // Load subject_business for all meetings in this session
             let meetingIDs = meetings.compactMap { $0.id }
             let subjects = try await Subject.query(on: req.db)
-                .filter(\.$idMeeting ~~ meetingIDs)
+                .filter(\.$meeting.$id ~~ meetingIDs)
                 .all()
             let subjectIDs = subjects.compactMap { $0.id }
             let subjectBusinesses = subjectIDs.isEmpty ? [SubjectBusiness]() :
                 try await SubjectBusiness.query(on: req.db)
-                    .filter(\.$idSubject ~~ subjectIDs)
+                    .filter(\.$subjectID ~~ subjectIDs)
                     .all()
 
-            // Build lookup: meetingID → [business titles]
-            let subjectByMeeting = Dictionary(grouping: subjects, by: { $0.idMeeting })
-            var meetingBusinessMap: [Int: [String]] = [:]
+            // Collect all referenced business IDs and load from DB
+            let allBusinessIDs = Set(subjectBusinesses.compactMap { $0.businessID })
+            let existingBusinesses = allBusinessIDs.isEmpty ? [Business]() :
+                try await Business.query(on: req.db)
+                    .with(\.$businessType)
+            .with(\.$submittedByCouncil) { mc in mc.with(\.$party) }
+                    .filter(\.$id ~~ allBusinessIDs)
+                    .all()
+            var businessLookup = Dictionary(uniqueKeysWithValues: existingBusinesses.compactMap { b -> (Int, Business)? in
+                guard let id = b.id else { return nil }
+                return (id, b)
+            })
+
+            // Fetch missing businesses from API and persist
+            let missingIDs = allBusinessIDs.subtracting(Set(businessLookup.keys))
+            if !missingIDs.isEmpty {
+                let parlament = req.application.parlamentService
+                for missingID in missingIDs {
+                    do {
+                        if let dto = try await parlament.fetchBusiness(id: missingID) {
+                            // Derive BusinessType
+                            var businessTypeID: Int?
+                            if let typeName = dto.BusinessTypeName, !typeName.isEmpty {
+                                if let existing = try await BusinessType.query(on: req.db).filter(\.$name == typeName).first() {
+                                    businessTypeID = existing.id
+                                } else {
+                                    let bt = BusinessType(name: typeName, abbreviation: dto.BusinessTypeAbbreviation)
+                                    try await bt.create(on: req.db)
+                                    businessTypeID = bt.id
+                                }
+                            }
+                            // Derive SubmissionCouncil
+                            var submissionCouncilID: Int?
+                            if let councilName = dto.SubmissionCouncilName, !councilName.isEmpty {
+                                if let existing = try await Council.query(on: req.db).filter(\.$name == councilName).first() {
+                                    submissionCouncilID = existing.id
+                                } else {
+                                    let council = Council(name: councilName)
+                                    try await council.create(on: req.db)
+                                    submissionCouncilID = council.id
+                                }
+                            }
+                            // Derive ResponsibleDepartment
+                            var responsibleDepartmentID: Int?
+                            if let deptName = dto.ResponsibleDepartmentName, !deptName.isEmpty {
+                                if let existing = try await Department.query(on: req.db).filter(\.$name == deptName).first() {
+                                    responsibleDepartmentID = existing.id
+                                } else {
+                                    let dept = Department(name: deptName, abbreviation: dto.ResponsibleDepartmentAbbreviation)
+                                    try await dept.create(on: req.db)
+                                    responsibleDepartmentID = dept.id
+                                }
+                            }
+                            // Resolve SubmittedBy → MemberCouncil
+                            var submittedByCouncilID: Int?
+                            if let submittedBy = dto.SubmittedBy, !submittedBy.isEmpty {
+                                let parts = submittedBy.split(separator: " ", maxSplits: 1)
+                                if parts.count == 2 {
+                                    if let mc = try await MemberCouncil.query(on: req.db)
+                                        .filter(\.$lastName == String(parts[0]))
+                                        .filter(\.$firstName == String(parts[1]))
+                                        .first() {
+                                        submittedByCouncilID = mc.id
+                                    }
+                                }
+                            }
+                            let business = Business(id: dto.ID, title: dto.Title ?? "Business \(dto.ID)", sessionID: sessID)
+                            business.number = dto.BusinessShortNumber
+                            business.status = dto.BusinessStatusText
+                            business.statusDate = dto.businessStatusDateParsed
+                            business.submissionDate = dto.submissionDateParsed
+                            business.submittedBy = dto.SubmittedBy
+                            business.description = dto.Description
+                            business.submittedText = dto.SubmittedText
+                            business.reasonText = dto.ReasonText
+                            business.federalCouncilResponse = dto.FederalCouncilResponseText
+                            business.federalCouncilProposal = dto.FederalCouncilProposalText
+                            business.tagNames = dto.TagNames
+                            business.modified = dto.modifiedParsed
+                            business.$businessType.id = businessTypeID
+                            business.$submissionCouncil.id = submissionCouncilID
+                            business.$responsibleDepartment.id = responsibleDepartmentID
+                            business.$submittedByCouncil.id = submittedByCouncilID
+                            try await business.create(on: req.db)
+                            if let bt = businessTypeID {
+                                try await business.$businessType.load(on: req.db)
+                            }
+                            businessLookup[dto.ID] = business
+                        }
+                    } catch {
+                        req.logger.warning("Failed to fetch business \(missingID): \(error)")
+                    }
+                }
+            }
+
+            // Build lookup: meetingID → [MeetingBusinessItem]
+            let subjectByMeeting = Dictionary(grouping: subjects, by: { $0.$meeting.id })
+            var meetingBusinessMap: [Int: [MeetingBusinessItem]] = [:]
             for (meetingID, meetingSubjects) in subjectByMeeting {
                 guard let meetingID = meetingID else { continue }
                 let sIDs = Set(meetingSubjects.compactMap { $0.id })
-                let titles = subjectBusinesses
-                    .filter { sb in sb.idSubject.map { sIDs.contains($0) } ?? false }
-                    .compactMap { $0.title }
-                // Deduplicate
-                meetingBusinessMap[meetingID] = Array(Set(titles)).sorted()
+                let relevantSBs = subjectBusinesses
+                    .filter { sb in sb.subjectID.map { sIDs.contains($0) } ?? false }
+                var items: [MeetingBusinessItem] = []
+                var seenIDs = Set<Int>()
+                for sb in relevantSBs {
+                    guard let bizID = sb.businessID, !seenIDs.contains(bizID) else { continue }
+                    seenIDs.insert(bizID)
+                    if let biz = businessLookup[bizID] {
+                        items.append(MeetingBusinessItem(
+                            shortNumber: biz.number ?? "",
+                            title: biz.title,
+                            typeName: biz.businessType?.name ?? ""
+                        ))
+                    } else {
+                        items.append(MeetingBusinessItem(
+                            shortNumber: "",
+                            title: "Geschäft \(bizID)",
+                            typeName: ""
+                        ))
+                    }
+                }
+                meetingBusinessMap[meetingID] = items.sorted { $0.shortNumber < $1.shortNumber }
             }
 
             // Group by council (NR first, then SR, then others)
@@ -161,20 +306,26 @@ struct SessionController: RouteCollection {
                 var dateGroups: [MeetingDateGroup] = []
                 for (idx, dateStr) in sortedDates.enumerated() {
                     guard let dateMeetings = byDate[dateStr] else { continue }
-                    let businessTitles = dateMeetings.flatMap { m in
+                    let allItems = dateMeetings.flatMap { m in
                         meetingBusinessMap[m.id ?? 0] ?? []
                     }
-                    let uniqueTitles = Array(Set(businessTitles)).sorted()
+                    // Deduplicate by shortNumber
+                    var seen = Set<String>()
+                    let uniqueItems = allItems.filter { item in
+                        let key = item.shortNumber.isEmpty ? item.title : item.shortNumber
+                        return seen.insert(key).inserted
+                    }
                     let collapseID = "collapse-\(sessID)-\(key)-\(idx)"
                     dateGroups.append(MeetingDateGroup(
                         id: collapseID,
                         date: dateStr,
-                        businessCount: uniqueTitles.count,
-                        businesses: uniqueTitles
+                        businessCount: uniqueItems.count,
+                        businesses: uniqueItems
                     ))
                 }
 
                 councilGroups.append(MeetingCouncilGroup(
+                    id: "council-\(sessID)-\(key)",
                     councilAbbreviation: key,
                     councilName: councilName,
                     dates: dateGroups
@@ -182,10 +333,59 @@ struct SessionController: RouteCollection {
             }
 
             meetingSessionGroups.append(MeetingSessionGroup(
-                sessionName: sess.sessionName ?? sess.title,
+                id: "session-\(sessID)",
+                sessionName: sess.name,
                 sessionDates: "\(sess.startDate.map { formatDate($0) } ?? "") - \(sess.endDate.map { formatDate($0) } ?? "")",
                 councils: councilGroups
             ))
+        }
+
+        // Committees with members
+        let committees = try await Committee.query(on: req.db)
+            .with(\.$council)
+            .with(\.$mainCommittee)
+            .sort(\.$name)
+            .all()
+
+        let memberCommittees = try await MemberCommittee.query(on: req.db)
+            .with(\.$memberCouncil) { mc in
+                mc.with(\.$party)
+                mc.with(\.$canton)
+            }
+            .with(\.$committee)
+            .all()
+
+        let membersByCommittee = Dictionary(grouping: memberCommittees, by: { $0.$committee.id })
+
+        let committeeContexts = committees.compactMap { c -> CommitteeListContext? in
+            guard let cid = c.id else { return nil }
+            let cms = membersByCommittee[cid] ?? []
+            let memberItems = cms.map { mc in
+                CommitteeMemberItem(
+                    id: mc.$memberCouncil.id,
+                    firstName: mc.memberCouncil.firstName,
+                    lastName: mc.memberCouncil.lastName,
+                    party: mc.memberCouncil.party?.abbreviation ?? "-",
+                    partyColor: mc.memberCouncil.party?.color ?? "#6c757d",
+                    canton: mc.memberCouncil.canton?.abbreviation ?? "-",
+                    function: mc.function ?? "Mitglied"
+                )
+            }.sorted { a, b in
+                let order = ["Präsident/in": 0, "Vizepräsident/in": 1, "Mitglied": 2]
+                let ao = order[a.function] ?? 3
+                let bo = order[b.function] ?? 3
+                return ao != bo ? ao < bo : a.lastName < b.lastName
+            }
+            return CommitteeListContext(
+                id: "committee-\(cid)",
+                name: c.name,
+                abbreviation: c.abbreviation ?? "",
+                council: c.council?.abbreviation ?? "",
+                committeeType: c.committeeType ?? "",
+                parentName: c.mainCommittee?.name,
+                memberCount: cms.count,
+                members: memberItems
+            )
         }
 
         let context = DashboardContext(
@@ -193,7 +393,8 @@ struct SessionController: RouteCollection {
             members: memberContexts,
             businesses: businessContexts,
             transcripts: transcriptContexts,
-            meetingGroups: meetingSessionGroups
+            meetingGroups: meetingSessionGroups,
+            committees: committeeContexts
         )
 
         return try await req.view.render("sessions", context)
@@ -204,8 +405,7 @@ struct SessionController: RouteCollection {
         let dtos = try await req.application.parlamentService.fetchSessions()
         for dto in dtos {
             if let existing = try await Session.find(dto.ID, on: req.db) {
-                existing.sessionName = dto.SessionName ?? existing.sessionName
-                existing.title = dto.Title ?? existing.title
+                existing.name = dto.SessionName ?? existing.name
                 existing.abbreviation = dto.Abbreviation ?? existing.abbreviation
                 existing.startDate = dto.startDateParsed ?? existing.startDate
                 existing.endDate = dto.endDateParsed ?? existing.endDate
@@ -214,8 +414,7 @@ struct SessionController: RouteCollection {
             } else {
                 let session = Session(
                     id: dto.ID,
-                    title: dto.Title ?? "Session \(dto.ID)",
-                    sessionName: dto.SessionName,
+                    name: dto.SessionName ?? dto.Title ?? "Session \(dto.ID)",
                     abbreviation: dto.Abbreviation,
                     startDate: dto.startDateParsed,
                     endDate: dto.endDateParsed,
@@ -238,6 +437,7 @@ struct SessionController: RouteCollection {
 
         let businesses = try await Business.query(on: req.db)
             .with(\.$businessType)
+            .with(\.$submittedByCouncil) { mc in mc.with(\.$party) }
             .filter(\.$session.$id == sessionID)
             .sort(\.$submissionDate, .descending)
             .all()
@@ -248,19 +448,24 @@ struct SessionController: RouteCollection {
 
         let context = SessionDetailContext(
             id: session.id ?? 0,
-            title: session.title,
+            title: session.name,
             abbreviation: session.abbreviation ?? "",
             startDate: session.startDate.map { formatDate($0) } ?? "",
             endDate: session.endDate.map { formatDate($0) } ?? "",
             businessCount: businesses.count,
             voteCount: votes.count,
             businesses: businesses.map { b in
-                BusinessContext(
+                let sbc = b.submittedByCouncil
+                return BusinessContext(
                     id: b.id ?? 0,
-                    shortNumber: b.businessShortNumber ?? "",
+                    shortNumber: b.number ?? "",
                     title: b.title,
                     typeName: b.businessType?.name ?? "",
-                    statusText: b.businessStatusText ?? ""
+                    statusText: b.status ?? "",
+                    submittedBy: b.submittedBy ?? "",
+                    submittedByID: sbc?.id,
+                    submittedByName: sbc.map { "\($0.firstName) \($0.lastName)" },
+                    submittedByPartyColor: sbc?.party?.color
                 )
             }
         )
@@ -283,15 +488,39 @@ struct DashboardContext: Encodable {
     let businesses: [BusinessContext]
     let transcripts: [TranscriptContext]
     let meetingGroups: [MeetingSessionGroup]
+    let committees: [CommitteeListContext]
+}
+
+struct CommitteeListContext: Encodable {
+    let id: String
+    let name: String
+    let abbreviation: String
+    let council: String
+    let committeeType: String
+    let parentName: String?
+    let memberCount: Int
+    let members: [CommitteeMemberItem]
+}
+
+struct CommitteeMemberItem: Encodable {
+    let id: Int
+    let firstName: String
+    let lastName: String
+    let party: String
+    let partyColor: String
+    let canton: String
+    let function: String
 }
 
 struct MeetingSessionGroup: Encodable {
+    let id: String
     let sessionName: String
     let sessionDates: String
     let councils: [MeetingCouncilGroup]
 }
 
 struct MeetingCouncilGroup: Encodable {
+    let id: String
     let councilAbbreviation: String
     let councilName: String
     let dates: [MeetingDateGroup]
@@ -301,13 +530,18 @@ struct MeetingDateGroup: Encodable {
     let id: String
     let date: String
     let businessCount: Int
-    let businesses: [String]
+    let businesses: [MeetingBusinessItem]
+}
+
+struct MeetingBusinessItem: Encodable {
+    let shortNumber: String
+    let title: String
+    let typeName: String
 }
 
 struct SessionContext: Encodable {
     let id: Int
     let sessionName: String
-    let title: String
     let abbreviation: String
     let startDate: String
     let endDate: String
@@ -343,15 +577,20 @@ struct BusinessContext: Encodable {
     let title: String
     let typeName: String
     let statusText: String
+    let submittedBy: String
+    let submittedByID: Int?
+    let submittedByName: String?
+    let submittedByPartyColor: String?
 }
 
 struct TranscriptContext: Encodable {
     let id: Int
-    let speakerFullName: String
-    let speakerFunction: String
+    let speakerID: Int?
     let meetingDate: String
-    let councilName: String
-    let faction: String
-    let canton: String
-    let textPreview: String
+    let speakerFullName: String
+    let partyAbbreviation: String
+    let partyColor: String
+    let businessShortNumber: String
+    let businessTitle: String
+    let searchText: String
 }

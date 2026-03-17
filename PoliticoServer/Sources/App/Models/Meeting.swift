@@ -7,9 +7,6 @@ final class Meeting: Model, Content, @unchecked Sendable {
     @ID(custom: "id", generatedBy: .user)
     var id: Int?
 
-    @Field(key: "meeting_number")
-    var meetingNumber: Int?
-
     @Parent(key: "session_id")
     var session: Session
 
@@ -22,14 +19,11 @@ final class Meeting: Model, Content, @unchecked Sendable {
     @Field(key: "begin")
     var begin: String?
 
-    @Field(key: "meeting_order_text")
-    var meetingOrderText: String?
-
     @Field(key: "sort_order")
     var sortOrder: Int?
 
-    @Field(key: "session_name")
-    var sessionName: String?
+    @Field(key: "sort_order_text")
+    var sortOrderText: String?
 
     init() {}
 

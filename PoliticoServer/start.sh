@@ -19,7 +19,9 @@ lsof -ti:8080 | xargs kill -9 2>/dev/null
 echo "Building..."
 swift build || exit 1
 
-echo "Starting PoliticoServer on http://localhost:8080"
-echo "Logs: $LOGFILE"
-echo "  tail -f $LOGFILE"
-swift run App serve 2>&1 | tee "$LOGFILE"
+LOCAL_IP=$(ipconfig getifaddr en0 2>/dev/null || ipconfig getifaddr en1 2>/dev/null || echo "localhost")
+echo "Starting PoliticoServer"
+echo "  Local:   http://localhost:8080"
+echo "  Network: http://$LOCAL_IP:8080"
+echo "  Logs:    $LOGFILE"
+swift run App serve --hostname 0.0.0.0 --port 8080 2>&1 | tee "$LOGFILE"

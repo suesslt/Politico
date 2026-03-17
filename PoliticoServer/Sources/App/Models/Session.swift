@@ -7,11 +7,8 @@ final class Session: Model, Content, @unchecked Sendable {
     @ID(custom: "id", generatedBy: .user)
     var id: Int?
 
-    @Field(key: "session_name")
-    var sessionName: String?
-
-    @Field(key: "title")
-    var title: String
+    @Field(key: "name")
+    var name: String
 
     @Field(key: "abbreviation")
     var abbreviation: String?
@@ -36,10 +33,9 @@ final class Session: Model, Content, @unchecked Sendable {
 
     init() {}
 
-    init(id: Int, title: String, sessionName: String? = nil, abbreviation: String? = nil, startDate: Date? = nil, endDate: Date? = nil, modified: Date? = nil) {
+    init(id: Int, name: String, abbreviation: String? = nil, startDate: Date? = nil, endDate: Date? = nil, modified: Date? = nil) {
         self.id = id
-        self.title = title
-        self.sessionName = sessionName
+        self.name = name
         self.abbreviation = abbreviation
         self.startDate = startDate
         self.endDate = endDate

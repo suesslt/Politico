@@ -43,8 +43,19 @@ enum ODataDateFormatter {
         formatter.string(from: date)
     }
 
-    /// Parse OData date format: /Date(1234567890000)/
+    private static let yyyymmddFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "yyyyMMdd"
+        f.timeZone = TimeZone(identifier: "Europe/Zurich")
+        return f
+    }()
+
+    /// Parse OData date format: /Date(1234567890000)/ or plain YYYYMMDD
     static func parse(_ string: String) -> Date? {
+        // Try YYYYMMDD format (e.g. "20260304")
+        if string.count == 8, string.allSatisfy({ $0.isNumber }) {
+            return yyyymmddFormatter.date(from: string)
+        }
         guard string.hasPrefix("/Date(") && string.hasSuffix(")/") else {
             return nil
         }
