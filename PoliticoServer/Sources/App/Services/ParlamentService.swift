@@ -34,7 +34,7 @@ struct ParlamentService: Sendable {
     // MARK: - Fetch MemberCouncil
 
     func fetchAllMemberCouncils() async throws -> [ParlamentarierDTO] {
-        let urlString = "\(baseURL)/MemberCouncil?$filter=Language%20eq%20'DE'%20and%20Active%20eq%20true&$format=json&$select=ID,PersonNumber,FirstName,LastName,OfficialName,GenderAsString,Active,PartyAbbreviation,PartyName,ParlGroupAbbreviation,ParlGroupName,CantonAbbreviation,CantonName,CouncilName,CouncilAbbreviation,DateOfBirth,DateJoining,DateLeaving,DateElection,MaritalStatusText,NumberOfChildren,BirthPlace_City,BirthPlace_Canton,Citizenship,MilitaryRankText,Nationality,Mandates,AdditionalMandate,AdditionalActivity,Modified&$orderby=LastName,FirstName"
+        let urlString = "\(baseURL)/MemberCouncil?$filter=Language%20eq%20'DE'&$format=json&$select=ID,PersonNumber,FirstName,LastName,OfficialName,GenderAsString,Active,PartyAbbreviation,PartyName,ParlGroupAbbreviation,ParlGroupName,CantonAbbreviation,CantonName,CouncilName,CouncilAbbreviation,DateOfBirth,DateJoining,DateLeaving,DateElection,MaritalStatusText,NumberOfChildren,BirthPlace_City,BirthPlace_Canton,Citizenship,MilitaryRankText,Nationality,Mandates,AdditionalMandate,AdditionalActivity,Modified&$orderby=LastName,FirstName"
         return try await fetchAllPages(from: urlString)
     }
 
@@ -119,7 +119,15 @@ struct ParlamentService: Sendable {
             let data = try await fetchData(from: currentURL)
             let response = try JSONDecoder().decode(ODataResponse<T>.self, from: data)
             allResults.append(contentsOf: response.items)
-            nextURL = response.next
+            // OData __next URLs often lack $format=json — ensure it's present
+            if var next = response.next {
+                if !next.contains("$format=json") {
+                    next += next.contains("?") ? "&$format=json" : "?$format=json"
+                }
+                nextURL = next
+            } else {
+                nextURL = nil
+            }
         }
         return allResults
     }
@@ -128,14 +136,41 @@ struct ParlamentService: Sendable {
 
     private func fetchData(from urlString: String) async throws -> Data {
         guard let url = URL(string: urlString) else {
+            logger.error("Invalid URL: \(urlString)")
             throw ParlamentError.invalidURL
         }
-        let (data, response) = try await URLSession.shared.data(from: url)
-        guard let httpResponse = response as? HTTPURLResponse,
-              (200...299).contains(httpResponse.statusCode) else {
-            throw ParlamentError.networkError
+        // Retry up to 3 times on transient errors
+        var lastError: Error = ParlamentError.networkError
+        for attempt in 1...3 {
+            do {
+                let (data, response) = try await URLSession.shared.data(from: url)
+                guard let httpResponse = response as? HTTPURLResponse,
+                      (200...299).contains(httpResponse.statusCode) else {
+                    let code = (response as? HTTPURLResponse)?.statusCode ?? -1
+                    logger.warning("HTTP \(code) for \(urlString.prefix(120)) (attempt \(attempt)/3)")
+                    throw ParlamentError.networkError
+                }
+                // Verify response is JSON, not HTML error page
+                let contentType = httpResponse.value(forHTTPHeaderField: "Content-Type") ?? ""
+                if !contentType.contains("json") {
+                    logger.warning("Non-JSON response (\(contentType)) for \(urlString.prefix(120)) (attempt \(attempt)/3)")
+                    throw ParlamentError.networkError
+                }
+                return data
+            } catch let error as ParlamentError {
+                lastError = error
+                if attempt < 3 {
+                    try await Task.sleep(nanoseconds: UInt64(attempt) * 2_000_000_000)
+                }
+            } catch {
+                logger.warning("Network error for \(urlString.prefix(120)) (attempt \(attempt)/3): \(error)")
+                lastError = error
+                if attempt < 3 {
+                    try await Task.sleep(nanoseconds: UInt64(attempt) * 2_000_000_000)
+                }
+            }
         }
-        return data
+        throw lastError
     }
 }
 

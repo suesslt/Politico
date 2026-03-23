@@ -7,8 +7,8 @@ final class PersonInterest: Model, Content, @unchecked Sendable {
     @ID(custom: .id, generatedBy: .database)
     var id: Int?
 
-    @Parent(key: "member_council_id")
-    var memberCouncil: MemberCouncil
+    @Parent(key: "person_id")
+    var person: Person
 
     @Field(key: "interest_name")
     var interestName: String?
@@ -27,7 +27,7 @@ final class PersonInterest: Model, Content, @unchecked Sendable {
 
     init() {}
 
-    init(memberCouncilID: Int) {
-        self.$memberCouncil.id = memberCouncilID
+    init(personID: Int) {
+        self.$person.id = personID
     }
 }

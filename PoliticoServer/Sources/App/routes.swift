@@ -23,6 +23,12 @@ func routes(_ app: Application) throws {
     let businessController = BusinessController()
     try protected.register(collection: businessController)
 
+    let propositionController = PropositionController()
+    try protected.register(collection: propositionController)
+
+    let chatController = ChatController()
+    try protected.register(collection: chatController)
+
     // Root redirect
     app.get { req -> Response in
         req.redirect(to: "/sessions")

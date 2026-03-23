@@ -5,11 +5,11 @@ import Leaf
 
 func configure(_ app: Application) async throws {
     // MARK: - Database
-    let dbHost = Environment.get("DB_HOST") ?? "localhost"
+    let dbHost = Environment.get("DB_HOST") ?? "192.168.1.144"
     let dbPort = Environment.get("DB_PORT").flatMap(Int.init) ?? 5432
-    let dbUser = Environment.get("DB_USER") ?? "politico"
-    let dbPass = Environment.get("DB_PASSWORD") ?? "politico"
-    let dbName = Environment.get("DB_NAME") ?? "politico"
+    let dbUser = Environment.get("DB_USER") ?? "politscore"
+    let dbPass = Environment.get("DB_PASSWORD") ?? "politscore"
+    let dbName = Environment.get("DB_NAME") ?? "politscore"
 
     let dbConfig = SQLPostgresConfiguration(
         hostname: dbHost,
@@ -19,7 +19,8 @@ func configure(_ app: Application) async throws {
         database: dbName,
         tls: .disable
     )
-    app.databases.use(.postgres(configuration: dbConfig), as: .psql)
+    app.databases.use(.postgres(configuration: dbConfig, connectionPoolTimeout: .seconds(30)), as: .psql)
+    app.databases.default(to: .psql)
 
     // MARK: - Middleware
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
@@ -64,6 +65,9 @@ func configure(_ app: Application) async throws {
     app.migrations.add(CreateCommitteeTables())
     app.migrations.add(AddSubmittedByCouncil())
     app.migrations.add(AddBusinessTexts())
+    app.migrations.add(CreatePropositions())
+    app.migrations.add(CreateTranscriptEmbeddings())
+    app.migrations.add(SeparatePersonFromMemberCouncil())
 
     try await app.autoMigrate()
 

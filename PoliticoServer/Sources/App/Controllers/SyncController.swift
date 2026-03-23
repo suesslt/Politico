@@ -29,9 +29,32 @@ struct SyncController: RouteCollection {
             let syncService = SyncService(app: app)
             do {
                 try await syncService.syncSession(sessionID: sessionID, on: app.db)
+                // Auto-start proposition extraction after successful sync (only if not already running)
+                let propStatus = try? await SyncStatus.query(on: app.db)
+                    .filter(\.$entityName == "propositions")
+                    .filter(\.$status == "extracting")
+                    .first()
+                if propStatus == nil {
+                    Task {
+                        let propService = PropositionService(app: app)
+                        try? await propService.extractAll(on: app.db)
+                    }
+                } else {
+                    app.logger.info("Skipping auto-start of proposition extraction: already running")
+                }
             } catch {
                 app.logger.error("Sync failed for session \(sessionID): \(error)")
-                // Update status to failed
+                // Update all stuck "syncing" statuses to "failed" for this session
+                let stuckStatuses = (try? await SyncStatus.query(on: app.db)
+                    .filter(\.$sessionID == sessionID)
+                    .filter(\.$status == "syncing")
+                    .all()) ?? []
+                for s in stuckStatuses {
+                    s.status = "failed"
+                    s.errorMessage = error.localizedDescription
+                    try? await s.update(on: app.db)
+                }
+                // Also set full_sync to failed
                 if let status = try? await SyncStatus.query(on: app.db)
                     .filter(\.$entityName == "full_sync")
                     .filter(\.$sessionID == sessionID)
@@ -39,6 +62,12 @@ struct SyncController: RouteCollection {
                     status.status = "failed"
                     status.errorMessage = error.localizedDescription
                     try? await status.update(on: app.db)
+                } else {
+                    // Create full_sync status if it doesn't exist yet
+                    let fs = SyncStatus(entityName: "full_sync", sessionID: sessionID, status: "failed")
+                    fs.errorMessage = error.localizedDescription
+                    fs.lastSyncAt = Date()
+                    try? await fs.create(on: app.db)
                 }
             }
         }

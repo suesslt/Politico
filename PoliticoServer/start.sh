@@ -5,11 +5,11 @@ cd "$(dirname "$0")"
 export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
 
 # Default environment
-export DB_HOST="${DB_HOST:-localhost}"
+export DB_HOST="${DB_HOST:-192.168.1.144}"
 export DB_PORT="${DB_PORT:-5432}"
-export DB_USER="${DB_USER:-politico}"
-export DB_PASSWORD="${DB_PASSWORD:-politico}"
-export DB_NAME="${DB_NAME:-politico}"
+export DB_USER="${DB_USER:-politscore}"
+export DB_PASSWORD="${DB_PASSWORD:-politscore}"
+export DB_NAME="${DB_NAME:-politscore}"
 
 LOGFILE="$(pwd)/server.log"
 

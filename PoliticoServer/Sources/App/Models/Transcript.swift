@@ -37,7 +37,15 @@ final class Transcript: Model, Content, @unchecked Sendable {
     @OptionalParent(key: "subject_id")
     var subject: Subject?
 
-    init() {}
+    @Field(key: "propositions_extracted")
+    var propositionsExtracted: Bool
+
+    @Children(for: \.$transcript)
+    var propositions: [Proposition]
+
+    init() {
+        self.propositionsExtracted = false
+    }
 
     init(id: Int) {
         self.id = id

@@ -12,6 +12,7 @@ struct MemberController: RouteCollection {
             throw Abort(.badRequest, reason: "Invalid member ID")
         }
         guard let member = try await MemberCouncil.query(on: req.db)
+            .with(\.$person)
             .with(\.$party)
             .with(\.$faction)
             .with(\.$canton)
@@ -56,7 +57,7 @@ struct MemberController: RouteCollection {
 
         // Person interests
         let interests = try await PersonInterest.query(on: req.db)
-            .filter(\.$memberCouncil.$id == memberID)
+            .filter(\.$person.$id == memberID)
             .all()
 
         let interestContexts = interests.map { i in
@@ -97,6 +98,15 @@ struct MemberController: RouteCollection {
             tSubjectToBiz[sid] = biz
         }
 
+        // Load proposition counts
+        let memberTranscriptIDs = transcripts.compactMap { $0.id }
+        let memberProps = memberTranscriptIDs.isEmpty ? [Proposition]() :
+            try await Proposition.query(on: req.db)
+                .filter(\.$transcript.$id ~~ memberTranscriptIDs)
+                .all()
+        let memberPropCounts = Dictionary(grouping: memberProps, by: { $0.$transcript.id })
+            .mapValues { $0.count }
+
         let transcriptContexts = transcripts.map { t in
             let biz = t.$subject.id.flatMap { tSubjectToBiz[$0] }
             return MemberTranscriptContext(
@@ -112,7 +122,8 @@ struct MemberController: RouteCollection {
                 searchText: (t.text ?? "")
                     .replacingOccurrences(of: "<[^>]+>", with: " ", options: .regularExpression)
                     .replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
-                    .trimmingCharacters(in: .whitespaces)
+                    .trimmingCharacters(in: .whitespaces),
+                propositionCount: memberPropCounts[t.id ?? 0] ?? 0
             )
         }
 
@@ -132,10 +143,10 @@ struct MemberController: RouteCollection {
 
         let context = MemberDetailContext(
             id: member.id ?? 0,
-            firstName: member.firstName,
-            lastName: member.lastName,
-            officialName: member.officialName ?? "",
-            gender: member.gender == "m" ? "Männlich" : member.gender == "f" ? "Weiblich" : "",
+            firstName: member.person.firstName,
+            lastName: member.person.lastName,
+            officialName: member.person.officialName ?? "",
+            gender: member.person.gender == "m" ? "Männlich" : member.person.gender == "f" ? "Weiblich" : "",
             active: member.active,
             party: member.party?.abbreviation ?? "-",
             partyName: member.party?.name ?? "",
@@ -145,15 +156,15 @@ struct MemberController: RouteCollection {
             cantonName: member.canton?.name ?? "",
             council: member.council?.abbreviation ?? "-",
             councilName: member.council?.name ?? "",
-            dateOfBirth: member.dateOfBirth.map { formatDate($0) } ?? "",
+            dateOfBirth: member.person.dateOfBirth.map { formatDate($0) } ?? "",
             dateJoining: member.dateJoining.map { formatDate($0) } ?? "",
             dateElection: member.dateElection.map { formatDate($0) } ?? "",
-            maritalStatus: member.maritalStatus ?? "",
-            numberOfChildren: member.numberOfChildren,
-            birthPlace: [member.birthPlaceCity, member.birthPlaceCanton].compactMap { $0 }.joined(separator: ", "),
-            citizenship: member.citizenship ?? "",
-            nationality: member.nationality ?? "",
-            militaryRank: member.militaryRank ?? "",
+            maritalStatus: member.person.maritalStatus ?? "",
+            numberOfChildren: member.person.numberOfChildren,
+            birthPlace: [member.person.birthPlaceCity, member.person.birthPlaceCanton].compactMap { $0 }.joined(separator: ", "),
+            citizenship: member.person.citizenship ?? "",
+            nationality: member.person.nationality ?? "",
+            militaryRank: member.person.militaryRank ?? "",
             occupation: member.occupationName ?? "",
             employer: member.employer ?? "",
             jobTitle: member.jobTitle ?? "",
@@ -248,6 +259,7 @@ struct MemberTranscriptContext: Encodable {
     let businessTitle: String
     let textPreview: String
     let searchText: String
+    let propositionCount: Int
 }
 
 struct MemberCommitteeContext: Encodable {

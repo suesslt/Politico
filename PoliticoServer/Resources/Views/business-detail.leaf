@@ -138,15 +138,17 @@
                                 <th class="sortable" data-col="1" style="cursor:pointer">Redner/in <span class="sort-arrows"><span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></span></th>
                                 <th class="sortable" data-col="2" style="cursor:pointer">Funktion <span class="sort-arrows"><span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></span></th>
                                 <th class="sortable" data-col="3" style="cursor:pointer">Partei <span class="sort-arrows"><span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></span></th>
+                                <th class="sortable text-center" data-col="4" style="cursor:pointer">Prop. <span class="sort-arrows"><span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></span></th>
                             </tr>
                         </thead>
                         <tbody>
                             #for(t in transcripts):
-                            <tr data-search="#(t.searchText)">
+                            <tr data-search="#(t.searchText)" style="cursor:pointer" onclick="window.location='/transcripts/#(t.id)?from=geschaefte'">
                                 <td class="text-nowrap">#(t.meetingDate)</td>
-                                <td>#if(t.speakerID):<a href="/members/#(t.speakerID)" class="text-decoration-none text-dark"><strong>#(t.speakerFullName)</strong></a>#else:<strong>#(t.speakerFullName)</strong>#endif</td>
+                                <td><strong>#(t.speakerFullName)</strong></td>
                                 <td><small>#(t.speakerFunction)</small></td>
                                 <td><span class="badge" style="background-color:#(t.partyColor);color:#fff">#(t.partyAbbreviation)</span></td>
+                                <td class="text-center">#if(t.propositionCount > 0):<span class="badge bg-primary">#(t.propositionCount)</span>#else:<span class="text-muted">-</span>#endif</td>
                             </tr>
                             #endfor
                         </tbody>

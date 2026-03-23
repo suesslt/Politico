@@ -16,7 +16,7 @@ struct BusinessController: RouteCollection {
             .with(\.$businessType)
             .with(\.$submissionCouncil)
             .with(\.$responsibleDepartment)
-            .with(\.$submittedByCouncil) { $0.with(\.$party) }
+            .with(\.$submittedByCouncil) { $0.with(\.$party); $0.with(\.$person) }
             .filter(\.$id == businessID)
             .first()
         guard let business else { throw Abort(.notFound) }
@@ -32,12 +32,21 @@ struct BusinessController: RouteCollection {
             transcripts = []
         } else {
             transcripts = try await Transcript.query(on: req.db)
-                .with(\.$memberCouncil) { mc in mc.with(\.$party) }
+                .with(\.$memberCouncil) { mc in mc.with(\.$party); mc.with(\.$person) }
                 .filter(\.$subject.$id ~~ subjectIDs)
                 .sort(\.$meetingDate, .descending)
                 .sort(\.$sortOrder)
                 .all()
         }
+
+        // Load proposition counts
+        let bizTranscriptIDs = transcripts.compactMap { $0.id }
+        let bizProps = bizTranscriptIDs.isEmpty ? [Proposition]() :
+            try await Proposition.query(on: req.db)
+                .filter(\.$transcript.$id ~~ bizTranscriptIDs)
+                .all()
+        let bizPropCounts = Dictionary(grouping: bizProps, by: { $0.$transcript.id })
+            .mapValues { $0.count }
 
         let transcriptContexts = transcripts.map { t in
             let mc = t.memberCouncil
@@ -46,11 +55,12 @@ struct BusinessController: RouteCollection {
                 id: t.id ?? 0,
                 meetingDate: t.meetingDate.map { formatDate($0) } ?? "",
                 speakerID: mc?.id,
-                speakerFullName: mc.map { "\($0.firstName) \($0.lastName)" } ?? "-",
+                speakerFullName: mc.map { "\($0.person.firstName) \($0.person.lastName)" } ?? "-",
                 speakerFunction: t.speakerFunction ?? "",
                 partyAbbreviation: party?.abbreviation ?? "-",
                 partyColor: party?.color ?? "#6c757d",
-                searchText: (t.text ?? "").replacingOccurrences(of: "<[^>]+>", with: " ", options: .regularExpression).replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression).trimmingCharacters(in: .whitespaces)
+                searchText: (t.text ?? "").replacingOccurrences(of: "<[^>]+>", with: " ", options: .regularExpression).replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression).trimmingCharacters(in: .whitespaces),
+                propositionCount: bizPropCounts[t.id ?? 0] ?? 0
             )
         }
 
@@ -69,7 +79,7 @@ struct BusinessController: RouteCollection {
             submissionDate: business.submissionDate.map { formatDate($0) } ?? "",
             submittedBy: business.submittedBy ?? "",
             submittedByID: sbc?.id,
-            submittedByName: sbc.map { "\($0.firstName) \($0.lastName)" },
+            submittedByName: sbc.map { "\($0.person.firstName) \($0.person.lastName)" },
             submittedByPartyColor: sbc?.party?.color,
             sessionName: business.session.name,
             businessType: business.businessType?.name ?? "",
@@ -136,4 +146,5 @@ struct BusinessTranscriptContext: Encodable {
     let partyAbbreviation: String
     let partyColor: String
     let searchText: String
+    let propositionCount: Int
 }

@@ -194,14 +194,16 @@
                                 <th class="sortable" data-col="0" style="cursor:pointer">Datum <span class="sort-arrows"><span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></span></th>
                                 <th class="sortable" data-col="1" style="cursor:pointer">Geschäft <span class="sort-arrows"><span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></span></th>
                                 <th>Text</th>
+                                <th class="sortable text-center" data-col="3" style="cursor:pointer">Prop. <span class="sort-arrows"><span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></span></th>
                             </tr>
                         </thead>
                         <tbody>
                             #for(t in transcripts):
-                            <tr data-search="#(t.searchText)">
+                            <tr data-search="#(t.searchText)" style="cursor:pointer" onclick="window.location='/transcripts/#(t.id)?from=parlamentarier'">
                                 <td class="text-nowrap">#(t.meetingDate)</td>
-                                <td>#if(t.businessID):<a href="/businesses/#(t.businessID)?from=member&memberID=#(id)" class="text-decoration-none"><code class="text-muted me-1">#(t.businessNumber)</code>#(t.businessTitle)</a>#elseif(t.businessTitle != ""):#(t.businessTitle)#endif</td>
+                                <td>#if(t.businessID):<code class="text-muted me-1">#(t.businessNumber)</code>#(t.businessTitle)#elseif(t.businessTitle != ""):#(t.businessTitle)#endif</td>
                                 <td><small class="text-muted">#(t.textPreview)</small></td>
+                                <td class="text-center">#if(t.propositionCount > 0):<span class="badge bg-primary">#(t.propositionCount)</span>#else:<span class="text-muted">-</span>#endif</td>
                             </tr>
                             #endfor
                         </tbody>
